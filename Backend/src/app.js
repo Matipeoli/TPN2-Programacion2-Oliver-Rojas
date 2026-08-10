@@ -5,6 +5,7 @@ const pool = require('./database/db');
 const { enviarRespuesta } = require('./utils/respuesta');
 const authRoutes = require('./routes/authRoutes');
 const coberturaRoutes = require('./routes/coberturaRoutes');
+const perfilRoutes = require('./routes/perfilRoutes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get('/health', async (req, res) => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/auth', perfilRoutes);
 app.use('/coberturas', coberturaRoutes);
 
 app.use((req, res) => {

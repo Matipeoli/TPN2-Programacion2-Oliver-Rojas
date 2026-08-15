@@ -3,9 +3,10 @@ const express = require('express');
 const cors = require('cors');
 const pool = require('./database/db');
 const { enviarRespuesta } = require('./utils/respuesta');
+const { AppError } = require('./utils/errores');
 const authRoutes = require('./routes/authRoutes');
 const coberturaRoutes = require('./routes/coberturaRoutes');
-const perfilRoutes = require('./routes/perfilRoutes');
+const usuarioRoutes = require('./routes/usuarioRoutes');
 
 const app = express();
 
@@ -23,11 +24,19 @@ app.get('/health', async (req, res) => {
 });
 
 app.use('/auth', authRoutes);
-app.use('/auth', perfilRoutes);
+app.use('/auth', usuarioRoutes);
 app.use('/coberturas', coberturaRoutes);
 
 app.use((req, res) => {
   return enviarRespuesta(res, 404, 'Recurso no encontrado');
+});
+
+app.use((err, req, res, next) => {
+  if (err instanceof AppError) {
+    return enviarRespuesta(res, err.codigo, err.estado);
+  }
+  console.error(err);
+  return enviarRespuesta(res, 500, 'Error interno del servidor');
 });
 
 const PORT = process.env.PORT || 3000;

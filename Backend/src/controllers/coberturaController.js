@@ -1,14 +1,9 @@
-const pool = require('../database/db');
 const { enviarRespuesta } = require('../utils/respuesta');
+const coberturaService = require('../services/coberturaService');
 
 async function listarCoberturas(req, res) {
-  try {
-    const [filas] = await pool.query('SELECT id, nombre FROM cobertura ORDER BY nombre');
-    return enviarRespuesta(res, 200, 'ok', filas);
-  } catch (error) {
-    console.error(error);
-    return enviarRespuesta(res, 500, 'Error interno al obtener las coberturas');
-  }
+  const filas = await coberturaService.listarCoberturas();
+  return enviarRespuesta(res, 200, 'ok', filas);
 }
 
 module.exports = { listarCoberturas };

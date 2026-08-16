@@ -12,7 +12,7 @@ async function crear(datos) {
   const [resultado] = await pool.query(
     `INSERT INTO usuario
       (apellido, nombre, fecha_nacimiento, password, rol, email, telefono, dni, id_sede, id_cobertura)
-     VALUES (?, ?, ?, ?, 'paciente', ?, ?, ?, NULL, ?)`,
+     VALUES (?, ?, ?, ?, 'paciente', ?, ?, ?, ?, ?)`,
     [
       datos.apellido,
       datos.nombre,
@@ -21,6 +21,7 @@ async function crear(datos) {
       datos.email,
       datos.telefono || '',
       datos.dni,
+      datos.id_sede ?? null,
       datos.id_cobertura
     ]
   );
@@ -29,10 +30,18 @@ async function crear(datos) {
 
 async function buscarPorDni(dni) {
   const [filas] = await pool.query(
-    'SELECT id, nombre, apellido, password, rol, id_sede FROM usuario WHERE dni = ?',
+    'SELECT id, nombre, apellido, email, telefono, password, rol, id_sede, id_cobertura FROM usuario WHERE dni = ?',
     [dni]
   );
   return filas[0] || null;
 }
 
-module.exports = { existePorDniOEmail, crear, buscarPorDni };
+async function buscarPorId(id) {
+  const [filas] = await pool.query(
+    'SELECT id, nombre, apellido, email, telefono, dni, rol, id_sede, id_cobertura FROM usuario WHERE id = ?',
+    [id]
+  );
+  return filas[0] || null;
+}
+
+module.exports = { existePorDniOEmail, crear, buscarPorDni, buscarPorId };

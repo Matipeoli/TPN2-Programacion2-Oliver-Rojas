@@ -2,20 +2,36 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const usuarioRepository = require('../repositories/usuarioRepository');
 const coberturaRepository = require('../repositories/coberturaRepository');
+const sedeRepository = require('../repositories/sedeRepository');
 const { AppError } = require('../utils/errores');
+const { validarLongitud, validarFormatoFecha } = require('../utils/validaciones');
 
 const SALT_ROUNDS = 10;
 
 async function registro(datos) {
-  const { nombre, apellido, dni, email, password, fecha_nacimiento, id_cobertura, telefono } = datos;
+  const { nombre, apellido, dni, email, password, fecha_nacimiento, id_cobertura, telefono, id_sede } = datos;
 
   if (!nombre || !apellido || !dni || !email || !password || !fecha_nacimiento || !id_cobertura) {
     throw new AppError(400, 'Faltan datos obligatorios: nombre, apellido, dni, email, password, fecha_nacimiento, id_cobertura');
   }
 
+  validarLongitud('nombre', nombre, 30);
+  validarLongitud('apellido', apellido, 30);
+  validarLongitud('email', email, 30);
+  validarLongitud('dni', dni, 8);
+  validarLongitud('telefono', telefono, 10);
+  validarFormatoFecha(fecha_nacimiento, 'fecha_nacimiento');
+
   const hayCobertura = await coberturaRepository.existePorId(id_cobertura);
   if (!hayCobertura) {
     throw new AppError(400, 'La cobertura indicada no existe');
+  }
+
+  if (id_sede !== undefined && id_sede !== null) {
+    const haySede = await sedeRepository.existePorId(id_sede);
+    if (!haySede) {
+      throw new AppError(400, 'La sede indicada no existe');
+    }
   }
 
   const yaExiste = await usuarioRepository.existePorDniOEmail(dni, email);
@@ -33,6 +49,7 @@ async function registro(datos) {
     email,
     telefono,
     dni,
+    id_sede,
     id_cobertura
   });
 
@@ -66,13 +83,20 @@ async function login({ dni, password }) {
       id: usuario.id,
       nombre: usuario.nombre,
       apellido: usuario.apellido,
+      email: usuario.email,
+      telefono: usuario.telefono,
       rol: usuario.rol,
-      id_sede: usuario.id_sede
+      id_sede: usuario.id_sede,
+      id_cobertura: usuario.id_cobertura
     }
   };
 }
 
-async function perfil(usuario) {
+async function perfil(id) {
+  const usuario = await usuarioRepository.buscarPorId(id);
+  if (!usuario) {
+    throw new AppError(404, 'Usuario no encontrado');
+  }
   return usuario;
 }
 

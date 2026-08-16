@@ -57,7 +57,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"nombre\": \"prueba\",\r\n  \"apellido\": \"prueba\",\r\n  \"dni\": \"1234\",\r\n  \"email\": \"prueba1@gmail.com\",\r\n  \"password\": \"123\",\r\n  \"fecha_nacimiento\": \"1999-01-01\",\r\n  \"id_cobertura\": 1,\r\n  \"telefono\": \"3424555666\"\r\n}",
+          "raw": "{\r\n  \"nombre\": \"prueba\",\r\n  \"apellido\": \"prueba\",\r\n  \"dni\": \"1234\",\r\n  \"email\": \"prueba1@gmail.com\",\r\n  \"password\": \"123\",\r\n  \"fecha_nacimiento\": \"1999-01-01\",\r\n  \"id_cobertura\": 1,\r\n  \"telefono\": \"3424555666\",\r\n  \"id_sede\": 1\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -201,6 +201,371 @@
           "path": [
             "auth",
             "admin"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "sedes-listar",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/sedes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "sedes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "sedes-alta",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Sede Sur\",\r\n  \"direccion\": \"Av. Libertad 789\",\r\n  \"telefono\": \"3424111000\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/sedes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "sedes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "sedes-modificar",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Sede Sur\",\r\n  \"direccion\": \"Av. Libertad 800\",\r\n  \"telefono\": \"3424111222\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/sedes/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "sedes",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "sedes-eliminar",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/sedes/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "sedes",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "especialidades-listar",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/especialidades",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "especialidades"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "especialidades-alta",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"descripcion\": \"Cardiologia\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/especialidades",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "especialidades"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "especialidades-modificar",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"descripcion\": \"Cardiologia Clinica\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/especialidades/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "especialidades",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "especialidades-eliminar",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/especialidades/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "especialidades",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "coberturas-alta",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"OSDE\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/coberturas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "coberturas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "coberturas-modificar",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"OSDE 210\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/coberturas/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "coberturas",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "coberturas-eliminar",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/coberturas/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "coberturas",
+            "2"
           ]
         }
       },

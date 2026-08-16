@@ -7,6 +7,8 @@ const { AppError } = require('./utils/errores');
 const authRoutes = require('./routes/authRoutes');
 const coberturaRoutes = require('./routes/coberturaRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
+const sedeRoutes = require('./routes/sedeRoutes');
+const especialidadRoutes = require('./routes/especialidadRoutes');
 
 const app = express();
 
@@ -26,6 +28,8 @@ app.get('/health', async (req, res) => {
 app.use('/auth', authRoutes);
 app.use('/auth', usuarioRoutes);
 app.use('/coberturas', coberturaRoutes);
+app.use('/sedes', sedeRoutes);
+app.use('/especialidades', especialidadRoutes);
 
 app.use((req, res) => {
   return enviarRespuesta(res, 404, 'Recurso no encontrado');

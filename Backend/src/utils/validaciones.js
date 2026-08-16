@@ -12,4 +12,10 @@ function validarFormatoFecha(valor, campo) {
   }
 }
 
-module.exports = { validarLongitud, validarFormatoFecha };
+function validarFormatoHora(valor, campo) {
+  if (valor && !/^\d{2}:\d{2}(:\d{2})?$/.test(String(valor))) {
+    throw new AppError(400, `Formato invalido para ${campo}: debe ser HH:MM`);
+  }
+}
+
+module.exports = { validarLongitud, validarFormatoFecha, validarFormatoHora };

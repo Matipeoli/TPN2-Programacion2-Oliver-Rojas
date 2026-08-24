@@ -16,4 +16,19 @@ async function atender(req, res) {
   return enviarRespuesta(res, 200, 'ok', datos);
 }
 
-module.exports = { crear, cancelar, atender };
+async function listarPorPaciente(req, res){
+  const filas = await turnoService.listarPorPaciente(req.usuario);
+  return enviarRespuesta(res, 200, 'ok', filas);
+}
+
+async function listarPorMedico(req, res) {
+  const filas = await turnoService.listarPorMedico(req.query, req.usuario);
+  return enviarRespuesta(res, 200, 'ok', filas);
+}
+
+async function listarPorSede(req, res) {
+  const filas = await turnoService.listarPorSede(req.query, req.usuario);
+  return enviarRespuesta(res, 200, 'ok', filas);
+}
+
+module.exports = { crear, cancelar, atender, listarPorPaciente, listarPorMedico, listarPorSede };

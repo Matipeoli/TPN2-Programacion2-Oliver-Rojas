@@ -128,4 +128,33 @@ async function atender(id, usuario) {
   return { id: Number(id), estado: 'atendido' };
 }
 
-module.exports = { crear, cancelar, atender };
+async function listarPorPaciente(usuario) {
+  return turnoRepository.listarPorPaciente(usuario.id);
+}
+
+async function listarPorMedico(filtros, usuario) {
+  const { fecha } = filtros;
+
+  if (!fecha) {
+    throw new AppError(400, 'Falta el parametro obligatorio: fecha');
+  }
+  validarFormatoFecha(fecha, 'fecha');
+
+  return turnoRepository.listarPorMedico(usuario.id, fecha);
+}
+
+async function listarPorSede(filtros, usuario) {
+  const { fecha } = filtros;
+
+  if (!usuario.id_sede) {
+    throw new AppError(403, 'El operador no tiene una sede asignada');
+  }
+  if (!fecha) {
+    throw new AppError(400, 'Falta el parametro obligatorio: fecha');
+  }
+  validarFormatoFecha(fecha, 'fecha');
+
+  return turnoRepository.listarPorSede(Number(usuario.id_sede), fecha);
+}
+
+module.exports = { crear, cancelar, atender, listarPorPaciente, listarPorMedico, listarPorSede };

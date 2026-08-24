@@ -44,4 +44,15 @@ async function cambiarEstado(id, estado) {
   return resultado.affectedRows > 0;
 }
 
+async function listarPorPaciente(idPaciente){
+    const [filas] = await pool.query(
+      `SELECT t.id, t.fecha, t.hora, t.nota, t.estado,
+              a.id_medico, a.id_especialidad, a.id_sede
+        FROM turno t JOIN agenda a ON t.id_agenda = a.id
+        WHERE t.id_paciente = ?
+        ORDER BY t.fecha ASC, t.hora ASC`, [idPaciente]
+    );
+    return filas;
+}
+
 module.exports = { buscarAgenda, existeSuperposicion, crear, buscarPorId, cambiarEstado };

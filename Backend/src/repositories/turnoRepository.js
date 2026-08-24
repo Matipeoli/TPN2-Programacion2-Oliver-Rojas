@@ -55,4 +55,30 @@ async function listarPorPaciente(idPaciente){
     return filas;
 }
 
-module.exports = { buscarAgenda, existeSuperposicion, crear, buscarPorId, cambiarEstado };
+async function listarPorMedico(idMedico, fecha) {
+  const [filas] = await pool.query(
+    `SELECT t.id, t.fecha, t.hora, t.nota, t.estado, t.id_paciente, t.id_cobertura,
+            a.id_especialidad, a.id_sede
+     FROM turno t
+     JOIN agenda a ON t.id_agenda = a.id
+     WHERE a.id_medico = ? AND t.fecha = ?
+     ORDER BY t.hora ASC`,
+    [idMedico, fecha]
+  );
+  return filas;
+}
+
+async function listarPorSede(idSede, fecha) {
+  const [filas] = await pool.query(
+    `SELECT t.id, t.fecha, t.hora, t.nota, t.estado, t.id_paciente, t.id_cobertura,
+            a.id_medico, a.id_especialidad
+     FROM turno t
+     JOIN agenda a ON t.id_agenda = a.id
+     WHERE a.id_sede = ? AND t.fecha = ?
+     ORDER BY t.hora ASC`,
+    [idSede, fecha]
+  );
+  return filas;
+}
+
+module.exports = { buscarAgenda, existeSuperposicion, crear, buscarPorId, cambiarEstado, listarPorPaciente, listarPorMedico, listarPorSede };

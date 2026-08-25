@@ -12,6 +12,7 @@ const especialidadRoutes = require('./routes/especialidadRoutes');
 const agendaRoutes = require('./routes/agendaRoutes');
 const turnoRoutes = require('./routes/turnoRoutes');
 const notificacionRoutes = require('./routes/notificacionRoutes');
+const historialRoutes = require('./routes/historialRoutes');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/especialidades', especialidadRoutes);
 app.use('/agenda', agendaRoutes);
 app.use('/turnos', turnoRoutes);
 app.use('/notificaciones', notificacionRoutes);
+app.use('/historial', historialRoutes);
 
 app.use((req, res) => {
   return enviarRespuesta(res, 404, 'Recurso no encontrado');

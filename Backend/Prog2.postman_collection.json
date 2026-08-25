@@ -708,11 +708,402 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "turnos_crear_paciente",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id_especialidad\": 1,\r\n  \"id_sede\": 1,\r\n  \"id_medico\": 3,\r\n  \"fecha\": \"{{fecha_slot}}\",\r\n  \"hora\": \"09:00\",\r\n  \"nota\": \"consulta de control\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/turnos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "turnos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "turnos_crear_operador",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id_especialidad\": 1,\r\n  \"id_sede\": 1,\r\n  \"id_medico\": 3,\r\n  \"fecha\": \"{{fecha_slot}}\",\r\n  \"hora\": \"10:00\",\r\n  \"nota\": \"turno cargado por operador\",\r\n  \"id_paciente\": 2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/turnos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "turnos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "turnos_mis_turnos_paciente",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/turnos/paciente",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "turnos",
+            "paciente"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "turnos_del_medico_por_fecha",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/turnos/medico?fecha={{fecha_slot}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "turnos",
+            "medico"
+          ],
+          "query": [
+            {
+              "key": "fecha",
+              "value": "{{fecha_slot}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "turnos_de_sede_por_fecha",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/turnos/sede?fecha={{fecha_slot}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "turnos",
+            "sede"
+          ],
+          "query": [
+            {
+              "key": "fecha",
+              "value": "{{fecha_slot}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "turnos_cancelar",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/turnos/1/cancelar",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "turnos",
+            "1",
+            "cancelar"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "turnos_atender",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/turnos/1/atender",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "turnos",
+            "1",
+            "atender"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "notificaciones_listar",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/notificaciones",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "notificaciones"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "notificaciones_marcar_leida",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/notificaciones/1/leer",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "notificaciones",
+            "1",
+            "leer"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "historial_alta",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id_turno\": 1,\r\n  \"diagnostico\": \"gripe comun\",\r\n  \"tratamiento\": \"reposo y hidratacion\",\r\n  \"observaciones\": \"control en 7 dias\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/historial",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "historial"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "historial_por_paciente",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/historial/paciente/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "historial",
+            "paciente",
+            "2"
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "variable": [
     {
       "key": "token",
+      "value": ""
+    },
+    {
+      "key": "fecha_slot",
       "value": ""
     }
   ]

@@ -9,5 +9,14 @@ async function existePorTurno(idTurno){
     return filas.length > 0;
 }
 
+async function crear({ id_turno, id_medico, id_paciente, diagnostico, tratamiento, observaciones }){
+    const [resultado] = await pool.query(
+        'INSERT INTO historial_clinico (id_turno, id_medico, id_paciente, diagnostico, tratamiento, observaciones) VALUES (?, ?, ?, ?, ?, ?, NOW())',
+        [id_turno, id_medico, id_paciente, diagnostico, tratamiento, observaciones]
+    );
 
-module.exports = { existePorTurno };
+    return resultado.insertId;
+}
+
+
+module.exports = { existePorTurno, crear };

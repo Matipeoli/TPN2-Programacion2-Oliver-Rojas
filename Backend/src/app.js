@@ -10,6 +10,7 @@ const usuarioRoutes = require('./routes/usuarioRoutes');
 const sedeRoutes = require('./routes/sedeRoutes');
 const especialidadRoutes = require('./routes/especialidadRoutes');
 const agendaRoutes = require('./routes/agendaRoutes');
+const auditoriaRoutes = require('./routes/auditoriaRoutes');
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use('/coberturas', coberturaRoutes);
 app.use('/sedes', sedeRoutes);
 app.use('/especialidades', especialidadRoutes);
 app.use('/agenda', agendaRoutes);
+app.use('/auditoria', auditoriaRoutes);
 
 app.use((req, res) => {
   return enviarRespuesta(res, 404, 'Recurso no encontrado');

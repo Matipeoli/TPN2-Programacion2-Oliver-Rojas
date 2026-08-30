@@ -708,6 +708,36 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "listar_auditoria",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/auditoria",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "auditoria"
+          ]
+        },
+        "description": "Lista los registros de auditoria. Solo rol admin. Filtros opcionales por query: id_usuario, entidad, fecha_desde, fecha_hasta (YYYY-MM-DD). Ejemplo: /auditoria?id_usuario=4&entidad=usuario&fecha_desde=2025-10-01&fecha_hasta=2025-10-31"
+      },
+      "response": []
     }
   ],
   "variable": [

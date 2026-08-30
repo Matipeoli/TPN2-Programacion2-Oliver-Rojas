@@ -2,9 +2,12 @@ const express = require('express');
 const router = express.Router();
 const { registro, login } = require('../controllers/authController');
 const { verificarToken, verificarRol } = require('../middlewares/auth');
+const { registrarAuditoria } = require('../middlewares/auditoria');
 const { enviarRespuesta } = require('../utils/respuesta');
 
-router.post('/registro', registro);
+router.post('/registro', registrarAuditoria('usuario', {
+  idUsuario: (req, res, body) => (body && body.datos && body.datos.id) || null
+}), registro);
 router.post('/login', login);
 
 

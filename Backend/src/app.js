@@ -14,6 +14,7 @@ const auditoriaRoutes = require('./routes/auditoriaRoutes');
 const turnoRoutes = require('./routes/turnoRoutes');
 const notificacionRoutes = require('./routes/notificacionRoutes');
 const historialRoutes = require('./routes/historialRoutes');
+const reporteRoutes = require('./routes/reporteRoutes');
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use('/turnos', turnoRoutes);
 app.use('/notificaciones', notificacionRoutes);
 app.use('/historial', historialRoutes);
 app.use('/auditoria', auditoriaRoutes);
+app.use('/reportes', reporteRoutes);
 
 app.use((req, res) => {
   return enviarRespuesta(res, 404, 'Recurso no encontrado');

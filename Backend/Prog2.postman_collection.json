@@ -24,7 +24,8 @@
               "path": [
                 "health"
               ]
-            }
+            },
+            "description": "**Chequeo de conexion a la base de datos.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/health`\n- **Rol requerido:** Publico (sin token).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"db\": \"conectada\" } }`\n\n**Errores:**\n`500` si la base de datos no responde.\n"
           },
           "response": []
         },
@@ -43,7 +44,8 @@
               "path": [
                 "coberturas"
               ]
-            }
+            },
+            "description": "**Lista las coberturas disponibles (para usarse en el registro de pacientes).**\n\n- **Metodo:** `GET`\n- **Ruta:** `/coberturas`\n- **Rol requerido:** Publico (sin token).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\": 1, \"nombre\": \"Jerarquicos\" } ] }`\n"
           },
           "response": []
         }
@@ -83,7 +85,8 @@
                 "auth",
                 "registro"
               ]
-            }
+            },
+            "description": "**Registra un usuario (queda con rol `paciente`). En esta prueba se crea el medico con DNI 20111222 (los datos hash de password son placeholders en el dump).**\n\n- **Metodo:** `POST`\n- **Ruta:** `/auth/registro`\n- **Rol requerido:** Publico (sin token).\n\n**Body esperado (JSON):**\n```json\n{\n  \"apellido\": \"Lopez\",\n  \"nombre\": \"Ana\",\n  \"fecha_nacimiento\": \"1980-05-10\",\n  \"password\": \"clave123\",\n  \"email\": \"alopez@clinica.com\",\n  \"telefono\": \"3424111222\",\n  \"dni\": \"20111222\",\n  \"id_cobertura\": 1,\n  \"id_sede\": 1\n}\n```\n\n**Respuesta exitosa:**\n`201` `{ \"codigo\": 201, \"estado\": \"ok\", \"datos\": { \"id\": 3, \"nombre\": \"Ana\", \"apellido\": \"Lopez\", \"dni\": \"20111222\", \"email\": \"...\", \"rol\": \"paciente\" } }`\n\n**Errores:**\n`400` faltan datos / formato invalido / cobertura o sede inexistentes.\n`409` DNI o email ya registrado.\n"
           },
           "response": [],
           "event": [
@@ -135,7 +138,8 @@
                 "auth",
                 "login"
               ]
-            }
+            },
+            "description": "**Autentica con DNI y password y devuelve un JWT.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/auth/login`\n- **Rol requerido:** Publico (sin token).\n\n**Body esperado (JSON):**\n```json\n{\n  \"dni\": \"20111222\",\n  \"password\": \"clave123\"\n}\n```\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"token\": \"<JWT>\", \"usuario\": { \"id\": 3, \"rol\": \"medico\", \"id_sede\": 1 } } }`\nEl token expira en `JWT_EXPIRES_IN` (default 8h).\n\n**Errores:**\n`400` faltan dni/password.\n`401` credenciales invalidas.\n"
           },
           "event": [
             {
@@ -183,7 +187,7 @@
                 "perfil"
               ]
             },
-            "description": "Devuelve los datos del usuario autenticado (a partir del token)."
+            "description": "**Devuelve los datos del usuario autenticado (a partir del token).**\n\n- **Metodo:** `GET`\n- **Ruta:** `/auth/perfil`\n- **Rol requerido:** Cualquier rol autenticado (Bearer token).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\", \"apellido\", \"nombre\", \"email\", \"telefono\", \"dni\", \"rol\", \"id_sede\", \"id_cobertura\" } }`\n\n**Errores:**\n`401` token no provisto, invalido o vencido.\n"
           },
           "response": []
         },
@@ -212,7 +216,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Lista los rangos de agenda, filtrable por medico, sede y fecha.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/agenda`\n- **Rol requerido:** `medico`, `operador` o `admin`. El rol `medico` solo puede ver su propia agenda.\n\n**Parametros:**\nQuery opcionales:\n- `id_medico`\n- `id_sede`\n- `fecha` (YYYY-MM-DD)\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\": 2, \"hora_entrada\": \"15:00\", \"hora_salida\": \"20:00\", \"fecha\": \"2025-10-20\", \"id_medico\": 3, \"id_especialidad\": 1, \"id_sede\": 1 } ] }`\n\n**Errores:**\n`401` sin token.\n`403` rol `paciente` o medico consultando agenda ajena.\n"
           },
           "response": []
         },
@@ -256,7 +261,8 @@
               "path": [
                 "agenda"
               ]
-            }
+            },
+            "description": "**Da de alta un rango horario de agenda de un medico.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/agenda`\n- **Rol requerido:** `medico`, `operador` o `admin`. El rol `medico` solo carga su propia agenda.\n\n**Body esperado (JSON):**\n```json\n{\n  \"hora_entrada\": \"15:00\",\n  \"hora_salida\": \"20:00\",\n  \"fecha\": \"2025-10-20\",\n  \"id_medico\": 3,\n  \"id_especialidad\": 1,\n  \"id_sede\": 1\n}\n```\n\n**Respuesta exitosa:**\n`201` `{ \"codigo\": 201, \"estado\": \"ok\", \"datos\": { \"id\": 2 } }`\nSe permiten varios rangos por dia para el mismo medico.\n\n**Errores:**\n`400` faltan datos / formato de fecha u hora invalido / medico, especialidad o sede inexistentes.\n`403` medico intentando cargar agenda de otro medico.\n"
           },
           "event": [
             {
@@ -324,7 +330,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**Modifica un rango horario de agenda.**\n\n- **Metodo:** `PUT`\n- **Ruta:** `/agenda/:id`\n- **Rol requerido:** `medico`, `operador` o `admin`. El rol `medico` solo modifica su propia agenda.\n\n**Parametros:**\nPath: `id` (id del registro de agenda).\n\n**Body esperado (JSON):**\n```json\n{\n  \"hora_entrada\": \"16:00\",\n  \"hora_salida\": \"20:00\",\n  \"fecha\": \"2025-10-20\",\n  \"id_medico\": 3,\n  \"id_especialidad\": 1,\n  \"id_sede\": 1\n}\n```\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 2, ... } }`\n\n**Errores:**\n`400` validaciones.\n`404` agenda inexistente.\n`403` medico modificando agenda ajena.\n"
           },
           "response": []
         },
@@ -354,7 +361,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Elimina un rango horario de agenda.**\n\n- **Metodo:** `DELETE`\n- **Ruta:** `/agenda/:id`\n- **Rol requerido:** `medico`, `operador` o `admin`. El rol `medico` solo elimina su propia agenda.\n\n**Parametros:**\nPath: `id` (id del registro de agenda).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 2 } }`\n\n**Errores:**\n`404` agenda inexistente.\n`403` medico eliminando agenda ajena.\n"
           },
           "response": []
         }
@@ -394,7 +402,8 @@
                 "auth",
                 "registro"
               ]
-            }
+            },
+            "description": "**Registra un paciente (queda con rol `paciente`). En esta prueba se crea el paciente con DNI 36000960.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/auth/registro`\n- **Rol requerido:** Publico (sin token).\n\n**Body esperado (JSON):**\n```json\n{\n  \"apellido\": \"Friggeri\",\n  \"nombre\": \"Franco\",\n  \"fecha_nacimiento\": \"1998-03-14\",\n  \"password\": \"clave123\",\n  \"email\": \"franco@mail.com\",\n  \"telefono\": \"342545555\",\n  \"dni\": \"36000960\",\n  \"id_cobertura\": 1\n}\n```\n\n**Respuesta exitosa:**\n`201` `{ \"codigo\": 201, \"estado\": \"ok\", \"datos\": { \"id\": 2, \"rol\": \"paciente\" } }`\n\n**Errores:**\n`400` faltan datos / formato invalido / cobertura inexistente.\n`409` DNI o email ya registrado.\n"
           },
           "response": [],
           "event": [
@@ -446,7 +455,8 @@
                 "auth",
                 "login"
               ]
-            }
+            },
+            "description": "**Autentica con DNI y password y devuelve un JWT.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/auth/login`\n- **Rol requerido:** Publico (sin token).\n\n**Body esperado (JSON):**\n```json\n{\n  \"dni\": \"36000960\",\n  \"password\": \"clave123\"\n}\n```\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"token\": \"<JWT>\", \"usuario\": { \"id\": 2, \"rol\": \"paciente\", \"id_sede\": null } } }`\n\n**Errores:**\n`400` faltan dni/password.\n`401` credenciales invalidas.\n"
           },
           "event": [
             {
@@ -494,7 +504,7 @@
                 "perfil"
               ]
             },
-            "description": "Devuelve los datos del usuario autenticado (a partir del token)."
+            "description": "**Devuelve los datos del usuario autenticado (a partir del token).**\n\n- **Metodo:** `GET`\n- **Ruta:** `/auth/perfil`\n- **Rol requerido:** Cualquier rol autenticado (Bearer token).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\", \"apellido\", \"nombre\", \"email\", \"telefono\", \"dni\", \"rol\", \"id_sede\", \"id_cobertura\" } }`\n\n**Errores:**\n`401` token no provisto, invalido o vencido.\n"
           },
           "response": []
         },
@@ -538,7 +548,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**Solicita un turno. La cobertura se toma automaticamente del paciente y el estado inicial es `confirmado`. Se genera una notificacion para el paciente.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/turnos`\n- **Rol requerido:** `paciente` (crea sus propios turnos) u `operador` (en representacion de un paciente).\n\n**Body esperado (JSON):**\n```json\n{\n  \"id_especialidad\": 1,\n  \"id_sede\": 1,\n  \"id_medico\": 3,\n  \"fecha\": \"2025-10-20\",\n  \"hora\": \"18:30\",\n  \"nota\": \"Consulta de control\",\n  \"id_paciente\": 2\n}\n```\n\n**Respuesta exitosa:**\n`201` `{ \"codigo\": 201, \"estado\": \"ok\", \"datos\": { \"id\": 4, \"estado\": \"confirmado\", \"id_cobertura\": 1 } }`\n\n**Nota:** `id_paciente` es obligatorio SOLO para el rol `operador`.\n\n**Errores:**\n`400` faltan datos / el horario no esta en la agenda del medico / el paciente no tiene cobertura.\n`403` operador creando un turno en otra sede (la sede se toma de la agenda).\n`409` ya existe un turno confirmado en ese horario (superposicion).\n"
           },
           "response": [],
           "event": [
@@ -586,7 +597,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Lista los turnos del paciente autenticado, ordenados de mas proximo a menos proximo.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/turnos/paciente`\n- **Rol requerido:** `paciente`.\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\", \"fecha\", \"hora\", \"nota\", \"estado\", \"id_medico\", \"id_especialidad\", \"id_sede\" } ] }`\n\n**Errores:**\n`401` sin token.\n`403` rol distinto de `paciente`.\n"
           },
           "response": []
         },
@@ -617,7 +629,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Cancela un turno (estado `cancelado`) y genera una notificacion para el paciente.**\n\n- **Metodo:** `PATCH`\n- **Ruta:** `/turnos/:id/cancelar`\n- **Rol requerido:** `paciente` (solo sus propios turnos), `operador`/`medico` (solo turnos de su sede).\n\n**Parametros:**\nPath: `id` (id del turno).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 6, \"estado\": \"cancelado\" } }`\n\n**Errores:**\n`400` el turno no esta en estado `confirmado`.\n`403` el turno no es propio (paciente) o es de otra sede (operador/medico).\n`404` turno inexistente.\n"
           },
           "response": []
         },
@@ -648,7 +661,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Consulta el historial clinico de un paciente.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/historial/paciente/:id_paciente`\n- **Rol requerido:** `paciente` (solo el suyo) o `medico` (solo los turnos que el atendio).\n\n**Parametros:**\nPath: `id_paciente`.\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\", \"id_turno\", \"id_medico\", \"id_paciente\", \"diagnostico\", \"tratamiento\", \"observaciones\", \"fecha_registro\" } ] }`\n\n**Errores:**\n`403` paciente consultando historial de otro paciente, o rol no permitido.\n"
           },
           "response": []
         },
@@ -677,7 +691,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Lista las notificaciones del usuario autenticado, de mas reciente a mas antigua.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/notificaciones`\n- **Rol requerido:** Cualquier rol autenticado.\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\", \"tipo\", \"mensaje\", \"leida\", \"fecha\" } ] }`\n\n**Errores:**\n`401` sin token.\n"
           },
           "response": [],
           "event": [
@@ -725,7 +740,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Marca una notificacion como leida (`leida = 1`).**\n\n- **Metodo:** `PATCH`\n- **Ruta:** `/notificaciones/:id/leer`\n- **Rol requerido:** Cualquier rol autenticado (solo sus propias notificaciones).\n\n**Parametros:**\nPath: `id` (id de la notificacion).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 1, \"leida\": 1 } }`\n\n**Errores:**\n`403` notificacion de otro usuario.\n`404` notificacion inexistente.\n"
           },
           "response": []
         },
@@ -761,7 +777,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**PRUEBA DE ERROR: un rol que no es `medico` intenta listar los turnos programados de un medico.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/turnos/medico`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Parametros:**\nQuery obligatorio: `fecha` (YYYY-MM-DD).\n\n**Errores:**\n`403` rol no permitido.\n`401` sin token.\n"
           },
           "response": []
         },
@@ -797,7 +814,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**PRUEBA DE ERROR: un rol que no es `operador` intenta listar los turnos de una sede.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/turnos/sede`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Parametros:**\nQuery obligatorio: `fecha` (YYYY-MM-DD).\n\n**Errores:**\n`403` rol no permitido.\n"
           },
           "response": []
         },
@@ -841,7 +859,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**PRUEBA DE ERROR: un rol que no es `medico` intenta registrar un historial clinico.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/historial`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Body esperado (JSON):**\n```json\n{\n  \"id_turno\": 1,\n  \"diagnostico\": \"x\"\n}\n```\n\n**Errores:**\n`403` rol no permitido.\n"
           },
           "response": []
         }
@@ -882,7 +901,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Lista los turnos programados del medico autenticado para una fecha.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/turnos/medico`\n- **Rol requerido:** `medico`.\n\n**Parametros:**\nQuery obligatorio: `fecha` (YYYY-MM-DD).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\", \"fecha\", \"hora\", \"nota\", \"estado\", \"id_paciente\", \"id_cobertura\", \"id_especialidad\", \"id_sede\" } ] }`\n\n**Errores:**\n`400` falta el parametro `fecha` o formato invalido.\n`403` rol distinto de `medico`.\n"
           },
           "response": []
         },
@@ -913,7 +933,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Marca un turno como `atendido` y genera una notificacion para el paciente. Luego se puede cargar el historial clinico.**\n\n- **Metodo:** `PATCH`\n- **Ruta:** `/turnos/:id/atender`\n- **Rol requerido:** `medico` (solo turnos que atendio el mismo).\n\n**Parametros:**\nPath: `id` (id del turno).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 4, \"estado\": \"atendido\" } }`\n\n**Errores:**\n`400` el turno no esta en estado `confirmado`.\n`403` el turno no es de ese medico.\n`404` turno inexistente.\n"
           },
           "response": [],
           "event": [
@@ -974,7 +995,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**Registra el diagnostico, tratamiento y observaciones de un turno ya atendido.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/historial`\n- **Rol requerido:** `medico` (solo de turnos que el atendio, y un unico historial por turno).\n\n**Body esperado (JSON):**\n```json\n{\n  \"id_turno\": 4,\n  \"diagnostico\": \"Esguince de tobillo grado I\",\n  \"tratamiento\": \"Reposo y antiinflamatorios\",\n  \"observaciones\": \"Control en 15 dias\"\n}\n```\n\n**Respuesta exitosa:**\n`201` `{ \"codigo\": 201, \"estado\": \"ok\", \"datos\": { \"id\": 2, \"id_turno\": 4, \"id_medico\": 3, \"id_paciente\": 2 } }`\n\n**Errores:**\n`400` el turno no esta `atendido` / faltan datos.\n`403` el turno no fue atendido por ese medico.\n`404` turno inexistente.\n`409` ya existe historial para ese turno.\n"
           },
           "response": []
         },
@@ -1005,7 +1027,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Consulta el historial clinico de un paciente.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/historial/paciente/:id_paciente`\n- **Rol requerido:** `paciente` (solo el suyo) o `medico` (solo los turnos que el atendio).\n\n**Parametros:**\nPath: `id_paciente`.\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\", \"id_turno\", \"id_medico\", \"id_paciente\", \"diagnostico\", \"tratamiento\", \"observaciones\", \"fecha_registro\" } ] }`\n\n**Errores:**\n`403` paciente consultando historial de otro paciente, o rol no permitido.\n"
           },
           "response": []
         },
@@ -1034,7 +1057,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Lista las notificaciones del usuario autenticado, de mas reciente a mas antigua.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/notificaciones`\n- **Rol requerido:** Cualquier rol autenticado.\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\", \"tipo\", \"mensaje\", \"leida\", \"fecha\" } ] }`\n\n**Errores:**\n`401` sin token.\n"
           },
           "response": [],
           "event": [
@@ -1082,7 +1106,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Marca una notificacion como leida (`leida = 1`).**\n\n- **Metodo:** `PATCH`\n- **Ruta:** `/notificaciones/:id/leer`\n- **Rol requerido:** Cualquier rol autenticado (solo sus propias notificaciones).\n\n**Parametros:**\nPath: `id` (id de la notificacion).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 1, \"leida\": 1 } }`\n\n**Errores:**\n`403` notificacion de otro usuario.\n`404` notificacion inexistente.\n"
           },
           "response": []
         },
@@ -1112,7 +1137,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**PRUEBA DE ERROR: un rol que no es `paciente` intenta listar sus propios turnos.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/turnos/paciente`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Errores:**\n`403` rol no permitido.\n"
           },
           "response": []
         },
@@ -1148,7 +1174,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**PRUEBA DE ERROR: un rol que no es `operador` intenta listar los turnos de una sede.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/turnos/sede`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Parametros:**\nQuery obligatorio: `fecha` (YYYY-MM-DD).\n\n**Errores:**\n`403` rol no permitido.\n"
           },
           "response": []
         },
@@ -1192,7 +1219,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**PRUEBA DE ERROR: un rol que no es `paciente` ni `operador` intenta crear un turno.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/turnos`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Body esperado (JSON):**\n```json\n{\n  \"id_especialidad\": 1,\n  \"id_sede\": 1,\n  \"id_medico\": 3,\n  \"fecha\": \"2025-10-20\",\n  \"hora\": \"18:30\",\n  \"nota\": \"x\"\n}\n```\n\n**Errores:**\n`403` rol no permitido.\n"
           },
           "response": []
         }
@@ -1232,7 +1260,8 @@
                 "auth",
                 "login"
               ]
-            }
+            },
+            "description": "**Autentica con DNI y password y devuelve un JWT.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/auth/login`\n- **Rol requerido:** Publico (sin token).\n\n**Body esperado (JSON):**\n```json\n{\n  \"dni\": \"18222333\",\n  \"password\": \"clave123\"\n}\n```\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"token\": \"<JWT>\", \"usuario\": { \"id\": 4, \"rol\": \"admin\", \"id_sede\": null } } }`\n\n**Errores:**\n`400` faltan dni/password.\n`401` credenciales invalidas.\n"
           },
           "event": [
             {
@@ -1280,7 +1309,7 @@
                 "perfil"
               ]
             },
-            "description": "Devuelve los datos del usuario autenticado (a partir del token)."
+            "description": "**Devuelve los datos del usuario autenticado (a partir del token).**\n\n- **Metodo:** `GET`\n- **Ruta:** `/auth/perfil`\n- **Rol requerido:** Cualquier rol autenticado (Bearer token).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\", \"apellido\", \"nombre\", \"email\", \"telefono\", \"dni\", \"rol\", \"id_sede\", \"id_cobertura\" } }`\n\n**Errores:**\n`401` token no provisto, invalido o vencido.\n"
           },
           "response": []
         },
@@ -1309,7 +1338,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Lista las sedes.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/sedes`\n- **Rol requerido:** Solo `admin`.\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\", \"nombre\", \"direccion\", \"telefono\" } ] }`\n\n**Errores:**\n`401` sin token.\n`403` rol distinto de `admin`.\n"
           },
           "response": []
         },
@@ -1353,7 +1383,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**Da de alta una sede. Registra auditoria (ALTA).**\n\n- **Metodo:** `POST`\n- **Ruta:** `/sedes`\n- **Rol requerido:** Solo `admin`.\n\n**Body esperado (JSON):**\n```json\n{\n  \"nombre\": \"Sede Centro\",\n  \"direccion\": \"San Martin 123\",\n  \"telefono\": \"3424000001\"\n}\n```\n\n**Respuesta exitosa:**\n`201` `{ \"codigo\": 201, \"estado\": \"ok\", \"datos\": { \"id\": 3, \"nombre\": \"Sede Centro\", \"direccion\": \"San Martin 123\", \"telefono\": \"3424000001\" } }`\n\n**Errores:**\n`400` faltan datos o exceden longitud.\n`401`/`403`.\n"
           },
           "response": [],
           "event": [
@@ -1415,7 +1446,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**Modifica una sede. Registra auditoria (MODIFICACION).**\n\n- **Metodo:** `PUT`\n- **Ruta:** `/sedes/:id`\n- **Rol requerido:** Solo `admin`.\n\n**Parametros:**\nPath: `id` (id de la sede).\n\n**Body esperado (JSON):**\n```json\n{\n  \"nombre\": \"Sede Centro 2\",\n  \"direccion\": \"San Martin 456\",\n  \"telefono\": \"3424000001\"\n}\n```\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 3, \"nombre\": \"Sede Centro 2\", ... } }`\n\n**Errores:**\n`404` sede inexistente.\n`400` validaciones.\n"
           },
           "response": []
         },
@@ -1445,7 +1477,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Elimina una sede. Registra auditoria (BAJA). Valida que la sede no tenga usuarios ni agenda asociada.**\n\n- **Metodo:** `DELETE`\n- **Ruta:** `/sedes/:id`\n- **Rol requerido:** Solo `admin`.\n\n**Parametros:**\nPath: `id` (id de la sede).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 3 } }`\n\n**Errores:**\n`404` sede inexistente.\n`409` sede con usuarios o agenda asociada (no se elimina).\n"
           },
           "response": []
         },
@@ -1474,7 +1507,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Lista las especialidades.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/especialidades`\n- **Rol requerido:** Solo `admin`.\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\", \"descripcion\" } ] }`\n\n**Errores:**\n`401`/`403`.\n"
           },
           "response": []
         },
@@ -1518,7 +1552,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**Da de alta una especialidad. Registra auditoria (ALTA).**\n\n- **Metodo:** `POST`\n- **Ruta:** `/especialidades`\n- **Rol requerido:** Solo `admin`.\n\n**Body esperado (JSON):**\n```json\n{\n  \"descripcion\": \"Kinesiologia\"\n}\n```\n\n**Respuesta exitosa:**\n`201` `{ \"codigo\": 201, \"estado\": \"ok\", \"datos\": { \"id\": 2, \"descripcion\": \"Kinesiologia\" } }`\n\n**Errores:**\n`400` falta descripcion o excede 30 caracteres.\n"
           },
           "response": [],
           "event": [
@@ -1580,7 +1615,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**Modifica una especialidad. Registra auditoria (MODIFICACION).**\n\n- **Metodo:** `PUT`\n- **Ruta:** `/especialidades/:id`\n- **Rol requerido:** Solo `admin`.\n\n**Parametros:**\nPath: `id` (id de la especialidad).\n\n**Body esperado (JSON):**\n```json\n{\n  \"descripcion\": \"Traumatologia y ortopedia\"\n}\n```\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 1, \"descripcion\": \"...\" } }`\n\n**Errores:**\n`404` especialidad inexistente.\n"
           },
           "response": []
         },
@@ -1610,7 +1646,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Elimina una especialidad. Registra auditoria (BAJA). Valida que ningun medico la tenga asociada.**\n\n- **Metodo:** `DELETE`\n- **Ruta:** `/especialidades/:id`\n- **Rol requerido:** Solo `admin`.\n\n**Parametros:**\nPath: `id` (id de la especialidad).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 1 } }`\n\n**Errores:**\n`404` inexistente.\n`409` especialidad con medicos asociados (no se elimina).\n"
           },
           "response": []
         },
@@ -1639,7 +1676,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Lista las coberturas.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/coberturas`\n- **Rol requerido:** Solo `admin` en este request (el GET publico esta en \"00 - Publicos\").\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\", \"nombre\" } ] }`\n"
           },
           "response": []
         },
@@ -1683,7 +1721,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**Da de alta una cobertura. Registra auditoria (ALTA).**\n\n- **Metodo:** `POST`\n- **Ruta:** `/coberturas`\n- **Rol requerido:** Solo `admin`.\n\n**Body esperado (JSON):**\n```json\n{\n  \"nombre\": \"OSDE\"\n}\n```\n\n**Respuesta exitosa:**\n`201` `{ \"codigo\": 201, \"estado\": \"ok\", \"datos\": { \"id\": 2, \"nombre\": \"OSDE\" } }`\n\n**Errores:**\n`400` falta nombre o excede 30 caracteres.\n"
           },
           "response": [],
           "event": [
@@ -1745,7 +1784,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**Modifica una cobertura. Registra auditoria (MODIFICACION).**\n\n- **Metodo:** `PUT`\n- **Ruta:** `/coberturas/:id`\n- **Rol requerido:** Solo `admin`.\n\n**Parametros:**\nPath: `id` (id de la cobertura).\n\n**Body esperado (JSON):**\n```json\n{\n  \"nombre\": \"OSDE 210\"\n}\n```\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 2, \"nombre\": \"OSDE 210\" } }`\n\n**Errores:**\n`404` cobertura inexistente.\n"
           },
           "response": []
         },
@@ -1775,7 +1815,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Elimina una cobertura. Registra auditoria (BAJA). Valida que ningun usuario la tenga asociada.**\n\n- **Metodo:** `DELETE`\n- **Ruta:** `/coberturas/:id`\n- **Rol requerido:** Solo `admin`.\n\n**Parametros:**\nPath: `id` (id de la cobertura).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 2 } }`\n\n**Errores:**\n`404` inexistente.\n`409` cobertura con usuarios asociados (no se elimina).\n"
           },
           "response": []
         },
@@ -1819,7 +1860,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**PRUEBA DE ERROR: el rol `admin` intenta crear un turno (solo permitido a `paciente`/`operador`).**\n\n- **Metodo:** `POST`\n- **Ruta:** `/turnos`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Body esperado (JSON):**\n```json\n{\n  \"id_especialidad\": 1,\n  \"id_sede\": 1,\n  \"id_medico\": 3,\n  \"fecha\": \"2025-10-20\",\n  \"hora\": \"18:30\",\n  \"nota\": \"x\"\n}\n```\n\n**Errores:**\n`403` rol no permitido.\n"
           },
           "response": []
         },
@@ -1863,7 +1905,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**PRUEBA DE ERROR: el rol `admin` intenta registrar un historial clinico (solo permitido a `medico`).**\n\n- **Metodo:** `POST`\n- **Ruta:** `/historial`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Body esperado (JSON):**\n```json\n{\n  \"id_turno\": 1,\n  \"diagnostico\": \"x\"\n}\n```\n\n**Errores:**\n`403` rol no permitido.\n"
           },
           "response": []
         },
@@ -1899,7 +1942,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**PRUEBA DE ERROR: el rol `admin` intenta listar los turnos de un medico (solo permitido a `medico`).**\n\n- **Metodo:** `GET`\n- **Ruta:** `/turnos/medico`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Parametros:**\nQuery obligatorio: `fecha` (YYYY-MM-DD).\n\n**Errores:**\n`403` rol no permitido.\n"
           },
           "response": []
         },
@@ -1935,7 +1979,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**PRUEBA DE ERROR: el rol `admin` intenta listar los turnos de una sede (solo permitido a `operador`).**\n\n- **Metodo:** `GET`\n- **Ruta:** `/turnos/sede`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Parametros:**\nQuery obligatorio: `fecha` (YYYY-MM-DD).\n\n**Errores:**\n`403` rol no permitido.\n"
           },
           "response": []
         },
@@ -1965,7 +2010,7 @@
                 "auditoria"
               ]
             },
-            "description": "Lista los registros de auditoria. Solo rol admin. Filtros opcionales por query: id_usuario, entidad, fecha_desde, fecha_hasta (YYYY-MM-DD). Ejemplo: /auditoria?id_usuario=4&entidad=usuario&fecha_desde=2025-10-01&fecha_hasta=2025-10-31"
+            "description": "**Consulta el log de auditoria. Registra automaticamente ALTA/BAJA/MODIFICACION sobre usuarios, coberturas, especialidades y sedes.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/auditoria`\n- **Rol requerido:** Solo `admin`.\n\n**Parametros:**\nQuery opcionales:\n- `id_usuario` (actor)\n- `entidad` (`usuario`, `cobertura`, `sede`, `especialidad`)\n- `fecha_desde` / `fecha_hasta` (YYYY-MM-DD)\n\nEjemplo: `/auditoria?id_usuario=4&entidad=usuario&fecha_desde=2025-10-01&fecha_hasta=2025-10-31`\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\", \"id_usuario\", \"accion\": \"ALTA\", \"entidad\", \"id_entidad\", \"detalle\", \"fecha\", \"nombre_usuario\" } ] }`\n\n**Errores:**\n`400` formato de fecha invalido.\n`401` sin token.\n`403` rol distinto de `admin`.\n"
           },
           "response": []
         },
@@ -1996,7 +2041,7 @@
                 }
               ]
             },
-            "description": "Cantidad de turnos por especialidad. Solo rol admin.\n\nQuery opcionales:\n- fecha_desde (YYYY-MM-DD)\n- fecha_hasta (YYYY-MM-DD)\n\nEjemplo: /reportes/turnos-por-especialidad?fecha_desde=2025-10-01&fecha_hasta=2025-10-31\n\nRespuesta 200:\n{\n  \"codigo\": 200,\n  \"estado\": \"ok\",\n  \"datos\": [\n    { \"id\": 1, \"descripcion\": \"Traumatologia\", \"cantidad\": 5 }\n  ]\n}"
+            "description": "**Cantidad de turnos por especialidad. No requiere tablas nuevas (consulta agregada sobre turno/agenda/especialidad).**\n\n- **Metodo:** `GET`\n- **Ruta:** `/reportes/turnos-por-especialidad`\n- **Rol requerido:** Solo `admin`.\n\n**Parametros:**\nQuery opcionales:\n- `fecha_desde` (YYYY-MM-DD)\n- `fecha_hasta` (YYYY-MM-DD)\n\nEjemplo: `/reportes/turnos-por-especialidad?fecha_desde=2025-10-01&fecha_hasta=2025-10-31`\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\": 1, \"descripcion\": \"Traumatologia\", \"cantidad\": 5 } ] }`\n\n**Errores:**\n`400` rango de fechas invalido.\n`401`/`403`.\n"
           },
           "response": []
         },
@@ -2027,7 +2072,7 @@
                 }
               ]
             },
-            "description": "Cantidad de turnos por sede. Solo rol admin.\n\nQuery opcionales:\n- fecha_desde (YYYY-MM-DD)\n- fecha_hasta (YYYY-MM-DD)\n\nEjemplo: /reportes/turnos-por-sede?fecha_desde=2025-10-01&fecha_hasta=2025-10-31\n\nRespuesta 200:\n{\n  \"codigo\": 200,\n  \"estado\": \"ok\",\n  \"datos\": [\n    { \"id\": 1, \"nombre\": \"Sede Centro\", \"cantidad\": 5 }\n  ]\n}"
+            "description": "**Cantidad de turnos por sede.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/reportes/turnos-por-sede`\n- **Rol requerido:** Solo `admin`.\n\n**Parametros:**\nQuery opcionales:\n- `fecha_desde` (YYYY-MM-DD)\n- `fecha_hasta` (YYYY-MM-DD)\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\": 1, \"nombre\": \"Sede Centro\", \"cantidad\": 5 } ] }`\n\n**Errores:**\n`400` rango de fechas invalido.\n`401`/`403`.\n"
           },
           "response": []
         },
@@ -2058,7 +2103,7 @@
                 }
               ]
             },
-            "description": "Ranking de medicos por cantidad de turnos atendidos. Solo rol admin.\n\nQuery opcionales:\n- fecha_desde (YYYY-MM-DD)\n- fecha_hasta (YYYY-MM-DD)\n\nRespuesta 200:\n{\n  \"codigo\": 200,\n  \"estado\": \"ok\",\n  \"datos\": [\n    { \"id\": 3, \"nombre\": \"Ana\", \"apellido\": \"Lopez\", \"cantidad_atendidos\": 10 }\n  ]\n}"
+            "description": "**Ranking de medicos por cantidad de turnos atendidos (estado `atendido`).**\n\n- **Metodo:** `GET`\n- **Ruta:** `/reportes/ranking-medicos`\n- **Rol requerido:** Solo `admin`.\n\n**Parametros:**\nQuery opcionales:\n- `fecha_desde` (YYYY-MM-DD)\n- `fecha_hasta` (YYYY-MM-DD)\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\": 3, \"nombre\": \"Ana\", \"apellido\": \"Lopez\", \"cantidad_atendidos\": 10 } ] }`\n\n**Errores:**\n`400` rango de fechas invalido.\n`401`/`403`.\n"
           },
           "response": []
         },
@@ -2089,7 +2134,7 @@
                 }
               ]
             },
-            "description": "Tasa de cancelacion del periodo (turnos cancelados / total de turnos). Solo rol admin.\n\nQuery opcionales:\n- fecha_desde (YYYY-MM-DD)\n- fecha_hasta (YYYY-MM-DD)\n\nRespuesta 200:\n{\n  \"codigo\": 200,\n  \"estado\": \"ok\",\n  \"datos\": {\n    \"total_turnos\": 10,\n    \"total_cancelados\": 2,\n    \"tasa_cancelacion\": 0.2\n  }\n}"
+            "description": "**Tasa de cancelacion del periodo: turnos cancelados sobre el total de turnos.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/reportes/tasa-cancelacion`\n- **Rol requerido:** Solo `admin`.\n\n**Parametros:**\nQuery opcionales:\n- `fecha_desde` (YYYY-MM-DD)\n- `fecha_hasta` (YYYY-MM-DD)\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"total_turnos\": 10, \"total_cancelados\": 2, \"tasa_cancelacion\": 0.2 } }`\n\n**Errores:**\n`400` rango de fechas invalido.\n`401`/`403`.\n"
           },
           "response": []
         }
@@ -2129,7 +2174,8 @@
                 "auth",
                 "login"
               ]
-            }
+            },
+            "description": "**Autentica con DNI y password y devuelve un JWT.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/auth/login`\n- **Rol requerido:** Publico (sin token).\n\n**Body esperado (JSON):**\n```json\n{\n  \"dni\": \"15200548\",\n  \"password\": \"clave123\"\n}\n```\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"token\": \"<JWT>\", \"usuario\": { \"id\": 1, \"rol\": \"operador\", \"id_sede\": 1 } } }`\n\n**Errores:**\n`400` faltan dni/password.\n`401` credenciales invalidas.\n"
           },
           "event": [
             {
@@ -2177,7 +2223,7 @@
                 "perfil"
               ]
             },
-            "description": "Devuelve los datos del usuario autenticado (a partir del token)."
+            "description": "**Devuelve los datos del usuario autenticado (a partir del token).**\n\n- **Metodo:** `GET`\n- **Ruta:** `/auth/perfil`\n- **Rol requerido:** Cualquier rol autenticado (Bearer token).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\", \"apellido\", \"nombre\", \"email\", \"telefono\", \"dni\", \"rol\", \"id_sede\", \"id_cobertura\" } }`\n\n**Errores:**\n`401` token no provisto, invalido o vencido.\n"
           },
           "response": []
         },
@@ -2206,7 +2252,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Lista los rangos de agenda, filtrable por medico, sede y fecha.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/agenda`\n- **Rol requerido:** `medico`, `operador` o `admin`. El rol `medico` solo puede ver su propia agenda.\n\n**Parametros:**\nQuery opcionales:\n- `id_medico`\n- `id_sede`\n- `fecha` (YYYY-MM-DD)\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\": 2, \"hora_entrada\": \"15:00\", \"hora_salida\": \"20:00\", \"fecha\": \"2025-10-20\", \"id_medico\": 3, \"id_especialidad\": 1, \"id_sede\": 1 } ] }`\n\n**Errores:**\n`401` sin token.\n`403` rol `paciente` o medico consultando agenda ajena.\n"
           },
           "response": []
         },
@@ -2250,7 +2297,8 @@
               "path": [
                 "agenda"
               ]
-            }
+            },
+            "description": "**Da de alta un rango horario de agenda de un medico.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/agenda`\n- **Rol requerido:** `medico`, `operador` o `admin`. El rol `medico` solo carga su propia agenda.\n\n**Body esperado (JSON):**\n```json\n{\n  \"hora_entrada\": \"15:00\",\n  \"hora_salida\": \"20:00\",\n  \"fecha\": \"2025-10-20\",\n  \"id_medico\": 3,\n  \"id_especialidad\": 1,\n  \"id_sede\": 1\n}\n```\n\n**Respuesta exitosa:**\n`201` `{ \"codigo\": 201, \"estado\": \"ok\", \"datos\": { \"id\": 2 } }`\nSe permiten varios rangos por dia para el mismo medico.\n\n**Errores:**\n`400` faltan datos / formato de fecha u hora invalido / medico, especialidad o sede inexistentes.\n`403` medico intentando cargar agenda de otro medico.\n"
           },
           "event": [
             {
@@ -2303,7 +2351,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Elimina un rango horario de agenda.**\n\n- **Metodo:** `DELETE`\n- **Ruta:** `/agenda/:id`\n- **Rol requerido:** `medico`, `operador` o `admin`. El rol `medico` solo elimina su propia agenda.\n\n**Parametros:**\nPath: `id` (id del registro de agenda).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 2 } }`\n\n**Errores:**\n`404` agenda inexistente.\n`403` medico eliminando agenda ajena.\n"
           },
           "response": []
         },
@@ -2347,7 +2396,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**Solicita un turno. La cobertura se toma automaticamente del paciente y el estado inicial es `confirmado`. Se genera una notificacion para el paciente.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/turnos`\n- **Rol requerido:** `paciente` (crea sus propios turnos) u `operador` (en representacion de un paciente).\n\n**Body esperado (JSON):**\n```json\n{\n  \"id_especialidad\": 1,\n  \"id_sede\": 1,\n  \"id_medico\": 3,\n  \"fecha\": \"2025-10-20\",\n  \"hora\": \"18:30\",\n  \"nota\": \"Consulta de control\",\n  \"id_paciente\": 2\n}\n```\n\n**Respuesta exitosa:**\n`201` `{ \"codigo\": 201, \"estado\": \"ok\", \"datos\": { \"id\": 4, \"estado\": \"confirmado\", \"id_cobertura\": 1 } }`\n\n**Nota:** `id_paciente` es obligatorio SOLO para el rol `operador`.\n\n**Errores:**\n`400` faltan datos / el horario no esta en la agenda del medico / el paciente no tiene cobertura.\n`403` operador creando un turno en otra sede (la sede se toma de la agenda).\n`409` ya existe un turno confirmado en ese horario (superposicion).\n"
           },
           "response": [],
           "event": [
@@ -2400,7 +2450,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Lista los turnos de una sede para una fecha determinada.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/turnos/sede`\n- **Rol requerido:** `operador` (con sede asignada).\n\n**Parametros:**\nQuery obligatorio: `fecha` (YYYY-MM-DD). La sede se toma del token.\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\", \"fecha\", \"hora\", \"nota\", \"estado\", \"id_paciente\", \"id_cobertura\", \"id_medico\", \"id_especialidad\" } ] }`\n\n**Errores:**\n`400` falta `fecha` o formato invalido.\n`403` rol distinto de `operador` u operador sin sede asignada.\n"
           },
           "response": []
         },
@@ -2431,7 +2482,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Cancela un turno (estado `cancelado`) y genera una notificacion para el paciente.**\n\n- **Metodo:** `PATCH`\n- **Ruta:** `/turnos/:id/cancelar`\n- **Rol requerido:** `paciente` (solo sus propios turnos), `operador`/`medico` (solo turnos de su sede).\n\n**Parametros:**\nPath: `id` (id del turno).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 6, \"estado\": \"cancelado\" } }`\n\n**Errores:**\n`400` el turno no esta en estado `confirmado`.\n`403` el turno no es propio (paciente) o es de otra sede (operador/medico).\n`404` turno inexistente.\n"
           },
           "response": []
         },
@@ -2460,7 +2512,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Lista las notificaciones del usuario autenticado, de mas reciente a mas antigua.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/notificaciones`\n- **Rol requerido:** Cualquier rol autenticado.\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": [ { \"id\", \"tipo\", \"mensaje\", \"leida\", \"fecha\" } ] }`\n\n**Errores:**\n`401` sin token.\n"
           },
           "response": [],
           "event": [
@@ -2508,7 +2561,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**Marca una notificacion como leida (`leida = 1`).**\n\n- **Metodo:** `PATCH`\n- **Ruta:** `/notificaciones/:id/leer`\n- **Rol requerido:** Cualquier rol autenticado (solo sus propias notificaciones).\n\n**Parametros:**\nPath: `id` (id de la notificacion).\n\n**Respuesta exitosa:**\n`200` `{ \"codigo\": 200, \"estado\": \"ok\", \"datos\": { \"id\": 1, \"leida\": 1 } }`\n\n**Errores:**\n`403` notificacion de otro usuario.\n`404` notificacion inexistente.\n"
           },
           "response": []
         },
@@ -2538,7 +2592,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**PRUEBA DE ERROR: un rol que no es `paciente` intenta listar sus propios turnos.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/turnos/paciente`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Errores:**\n`403` rol no permitido.\n"
           },
           "response": []
         },
@@ -2574,7 +2629,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**PRUEBA DE ERROR: un rol que no es `medico` intenta listar los turnos programados de un medico.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/turnos/medico`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Parametros:**\nQuery obligatorio: `fecha` (YYYY-MM-DD).\n\n**Errores:**\n`403` rol no permitido.\n`401` sin token.\n"
           },
           "response": []
         },
@@ -2618,7 +2674,8 @@
                   "language": "json"
                 }
               }
-            }
+            },
+            "description": "**PRUEBA DE ERROR: un rol que no es `medico` intenta registrar un historial clinico.**\n\n- **Metodo:** `POST`\n- **Ruta:** `/historial`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Body esperado (JSON):**\n```json\n{\n  \"id_turno\": 1,\n  \"diagnostico\": \"x\"\n}\n```\n\n**Errores:**\n`403` rol no permitido.\n"
           },
           "response": []
         },
@@ -2649,7 +2706,8 @@
                   "type": "string"
                 }
               ]
-            }
+            },
+            "description": "**PRUEBA DE ERROR: un rol que no es `paciente` ni `medico` intenta consultar un historial clinico.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/historial/paciente/:id_paciente`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Errores:**\n`403` rol no permitido.\n"
           },
           "response": []
         }

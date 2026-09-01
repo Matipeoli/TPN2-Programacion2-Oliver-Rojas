@@ -36,6 +36,15 @@ async function crear(datos, usuario) {
     throw new AppError(400, 'No existe agenda disponible para el medico, especialidad, sede y fecha indicados');
   }
 
+  if (usuario.rol === 'operador') {
+    if (!usuario.id_sede) {
+      throw new AppError(403, 'El operador no tiene una sede asignada');
+    }
+    if (Number(agenda.id_sede) !== Number(usuario.id_sede)) {
+      throw new AppError(403, 'No tiene permisos para crear turnos en otra sede');
+    }
+  }
+
   if (hora < agenda.hora_entrada || hora >= agenda.hora_salida) {
     throw new AppError(400, `El horario solicitado no esta dentro del rango disponible (${agenda.hora_entrada} - ${agenda.hora_salida})`);
   }

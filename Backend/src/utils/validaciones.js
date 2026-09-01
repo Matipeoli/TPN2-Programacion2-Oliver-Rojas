@@ -7,8 +7,16 @@ function validarLongitud(campo, valor, max) {
 }
 
 function validarFormatoFecha(valor, campo) {
-  if (valor && !/^\d{4}-\d{2}-\d{2}$/.test(String(valor))) {
+  if (!valor) {
+    return;
+  }
+  const texto = String(valor);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(texto)) {
     throw new AppError(400, `Formato invalido para ${campo}: debe ser YYYY-MM-DD`);
+  }
+  const fecha = new Date(texto + 'T00:00:00Z');
+  if (isNaN(fecha.getTime()) || fecha.toISOString().slice(0, 10) !== texto) {
+    throw new AppError(400, `Fecha invalida para ${campo}: ${texto} no es una fecha real`);
   }
 }
 

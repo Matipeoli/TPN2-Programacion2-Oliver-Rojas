@@ -53,7 +53,7 @@
       "name": "01 - Medico: Setup",
       "item": [
         {
-          "name": "Registro medico (dni 12234567)",
+          "name": "Registro medico (dni 20111222)",
           "request": {
             "method": "POST",
             "header": [
@@ -65,7 +65,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"nombre\": \"Test\",\r\n  \"apellido\": \"User\",\r\n  \"dni\": \"12234567\",\r\n  \"email\": \"medico@test.com\",\r\n  \"password\": \"1234\",\r\n  \"fecha_nacimiento\": \"1995-01-01\",\r\n  \"id_cobertura\": 1,\r\n  \"telefono\": \"3420000000\"\r\n}",
+              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Lopez\",\n  \"dni\": \"20111222\",\n  \"email\": \"alopez@clinica.com\",\n  \"password\": \"1234\",\n  \"fecha_nacimiento\": \"1980-05-10\",\n  \"id_cobertura\": 1,\n  \"telefono\": \"3424111222\",\n  \"id_sede\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -105,7 +105,7 @@
           ]
         },
         {
-          "name": "Login medico (dni 12234567)",
+          "name": "Login medico (dni 20111222)",
           "request": {
             "method": "POST",
             "header": [
@@ -117,7 +117,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"dni\": \"12234567\",\r\n  \"password\": \"1234\"\r\n}",
+              "raw": "{\n  \"dni\": \"20111222\",\n  \"password\": \"1234\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -364,7 +364,7 @@
       "name": "02 - Paciente",
       "item": [
         {
-          "name": "Registro paciente (dni 2334567)",
+          "name": "Registro paciente (dni 36000960)",
           "request": {
             "method": "POST",
             "header": [
@@ -376,7 +376,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"nombre\": \"Test\",\r\n  \"apellido\": \"User\",\r\n  \"dni\": \"2334567\",\r\n  \"email\": \"paciente@test.com\",\r\n  \"password\": \"1234\",\r\n  \"fecha_nacimiento\": \"1995-01-01\",\r\n  \"id_cobertura\": 1,\r\n  \"telefono\": \"3420000000\"\r\n}",
+              "raw": "{\n  \"nombre\": \"Franco\",\n  \"apellido\": \"Friggeri\",\n  \"dni\": \"36000960\",\n  \"email\": \"asdas@gaasds.com\",\n  \"password\": \"1234\",\n  \"fecha_nacimiento\": \"1998-03-14\",\n  \"id_cobertura\": 1,\n  \"telefono\": \"342545555\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -416,7 +416,7 @@
           ]
         },
         {
-          "name": "Login paciente (dni 2334567)",
+          "name": "Login paciente (dni 36000960)",
           "request": {
             "method": "POST",
             "header": [
@@ -428,7 +428,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"dni\": \"2334567\",\r\n  \"password\": \"1234\"\r\n}",
+              "raw": "{\n  \"dni\": \"36000960\",\n  \"password\": \"1234\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1202,7 +1202,7 @@
       "name": "04 - Admin",
       "item": [
         {
-          "name": "Login admin (dni 11111111)",
+          "name": "Login admin (dni 18222333)",
           "request": {
             "method": "POST",
             "header": [
@@ -1214,7 +1214,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"dni\": \"11111111\",\r\n  \"password\": \"1234\"\r\n}",
+              "raw": "{\n  \"dni\": \"18222333\",\n  \"password\": \"1234\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1968,6 +1968,130 @@
             "description": "Lista los registros de auditoria. Solo rol admin. Filtros opcionales por query: id_usuario, entidad, fecha_desde, fecha_hasta (YYYY-MM-DD). Ejemplo: /auditoria?id_usuario=4&entidad=usuario&fecha_desde=2025-10-01&fecha_hasta=2025-10-31"
           },
           "response": []
+        },
+        {
+          "name": "turnos-por-especialidad",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/reportes/turnos-por-especialidad",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "reportes",
+                "turnos-por-especialidad"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Cantidad de turnos por especialidad. Solo rol admin.\n\nQuery opcionales:\n- fecha_desde (YYYY-MM-DD)\n- fecha_hasta (YYYY-MM-DD)\n\nEjemplo: /reportes/turnos-por-especialidad?fecha_desde=2025-10-01&fecha_hasta=2025-10-31\n\nRespuesta 200:\n{\n  \"codigo\": 200,\n  \"estado\": \"ok\",\n  \"datos\": [\n    { \"id\": 1, \"descripcion\": \"Traumatologia\", \"cantidad\": 5 }\n  ]\n}"
+          },
+          "response": []
+        },
+        {
+          "name": "turnos-por-sede",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/reportes/turnos-por-sede",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "reportes",
+                "turnos-por-sede"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Cantidad de turnos por sede. Solo rol admin.\n\nQuery opcionales:\n- fecha_desde (YYYY-MM-DD)\n- fecha_hasta (YYYY-MM-DD)\n\nEjemplo: /reportes/turnos-por-sede?fecha_desde=2025-10-01&fecha_hasta=2025-10-31\n\nRespuesta 200:\n{\n  \"codigo\": 200,\n  \"estado\": \"ok\",\n  \"datos\": [\n    { \"id\": 1, \"nombre\": \"Sede Centro\", \"cantidad\": 5 }\n  ]\n}"
+          },
+          "response": []
+        },
+        {
+          "name": "ranking-medicos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/reportes/ranking-medicos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "reportes",
+                "ranking-medicos"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Ranking de medicos por cantidad de turnos atendidos. Solo rol admin.\n\nQuery opcionales:\n- fecha_desde (YYYY-MM-DD)\n- fecha_hasta (YYYY-MM-DD)\n\nRespuesta 200:\n{\n  \"codigo\": 200,\n  \"estado\": \"ok\",\n  \"datos\": [\n    { \"id\": 3, \"nombre\": \"Ana\", \"apellido\": \"Lopez\", \"cantidad_atendidos\": 10 }\n  ]\n}"
+          },
+          "response": []
+        },
+        {
+          "name": "tasa-cancelacion",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/reportes/tasa-cancelacion",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "reportes",
+                "tasa-cancelacion"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Tasa de cancelacion del periodo (turnos cancelados / total de turnos). Solo rol admin.\n\nQuery opcionales:\n- fecha_desde (YYYY-MM-DD)\n- fecha_hasta (YYYY-MM-DD)\n\nRespuesta 200:\n{\n  \"codigo\": 200,\n  \"estado\": \"ok\",\n  \"datos\": {\n    \"total_turnos\": 10,\n    \"total_cancelados\": 2,\n    \"tasa_cancelacion\": 0.2\n  }\n}"
+          },
+          "response": []
         }
       ]
     },
@@ -1975,7 +2099,7 @@
       "name": "05 - Operador",
       "item": [
         {
-          "name": "Login operador (dni 22222222)",
+          "name": "Login operador (dni 15200548)",
           "request": {
             "method": "POST",
             "header": [
@@ -1987,7 +2111,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"dni\": \"22222222\",\r\n  \"password\": \"1234\"\r\n}",
+              "raw": "{\n  \"dni\": \"15200548\",\n  \"password\": \"1234\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

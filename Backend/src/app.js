@@ -11,6 +11,9 @@ const sedeRoutes = require('./routes/sedeRoutes');
 const especialidadRoutes = require('./routes/especialidadRoutes');
 const agendaRoutes = require('./routes/agendaRoutes');
 const auditoriaRoutes = require('./routes/auditoriaRoutes');
+const turnoRoutes = require('./routes/turnoRoutes');
+const notificacionRoutes = require('./routes/notificacionRoutes');
+const historialRoutes = require('./routes/historialRoutes');
 
 const app = express();
 
@@ -33,6 +36,9 @@ app.use('/coberturas', coberturaRoutes);
 app.use('/sedes', sedeRoutes);
 app.use('/especialidades', especialidadRoutes);
 app.use('/agenda', agendaRoutes);
+app.use('/turnos', turnoRoutes);
+app.use('/notificaciones', notificacionRoutes);
+app.use('/historial', historialRoutes);
 app.use('/auditoria', auditoriaRoutes);
 
 app.use((req, res) => {

@@ -55,7 +55,7 @@ app.use((err, req, res, next) => {
   return enviarRespuesta(res, 500, 'Error interno del servidor');
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

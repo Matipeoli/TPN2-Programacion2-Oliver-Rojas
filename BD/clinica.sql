@@ -2,6 +2,13 @@
 -- Base de datos: `clinica` - version ampliada para TP integrador
 -- PASSWORDS REALES: los usuarios de prueba tienen password `1234` (bcrypt).
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+-- Recrea la base desde cero: se puede pegar completo en la pestaña SQL de phpMyAdmin
+-- (a nivel servidor, sin seleccionar ninguna base) o ejecutar con: mysql -u root -p < clinica.sql
+-- ATENCION: borra la base `clinica` existente y todos sus datos.
+DROP DATABASE IF EXISTS `clinica`;
+CREATE DATABASE `clinica` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `clinica`;
+
 START TRANSACTION;
 SET time_zone = "+00:00";
 

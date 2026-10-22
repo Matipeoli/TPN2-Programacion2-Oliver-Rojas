@@ -155,9 +155,10 @@ async function actualizarPerfil(id, datos) {
   return usuarioRepository.buscarPorId(id);
 }
 
-async function buscarPacientes(filtros) {
+async function buscarPacientes(filtros, usuario) {
   const busqueda = filtros.busqueda ? String(filtros.busqueda).trim() : '';
-  return usuarioRepository.buscarPacientes(busqueda);
+  const idMedico = usuario?.rol === 'medico' ? usuario.id : undefined;
+  return usuarioRepository.buscarPacientes(busqueda, idMedico);
 }
 
 async function listarUsuarios(filtros) {

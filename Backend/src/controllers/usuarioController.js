@@ -12,7 +12,7 @@ async function actualizarPerfil(req, res) {
 }
 
 async function buscarPacientes(req, res) {
-  const filas = await usuarioService.buscarPacientes(req.query);
+  const filas = await usuarioService.buscarPacientes(req.query, req.usuario);
   return enviarRespuesta(res, 200, 'ok', filas);
 }
 

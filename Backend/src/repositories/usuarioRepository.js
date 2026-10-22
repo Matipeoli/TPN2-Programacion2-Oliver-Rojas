@@ -236,17 +236,27 @@ async function listarPaginado({ nombre, apellido, rol, id_sede, limite, offset }
   return { total: Number(conteo[0].total), filas };
 }
 
-async function buscarPacientes(busqueda) {
+async function buscarPacientes(busqueda, idMedico) {
+  const condiciones = ["u.rol = 'paciente'"];
   const parametros = [];
-  let extra = '';
 
   if (busqueda) {
-    extra = ' AND (u.dni LIKE ? OR u.apellido LIKE ?)';
+    condiciones.push('(u.dni LIKE ? OR u.apellido LIKE ?)');
     parametros.push(`%${busqueda}%`, `%${busqueda}%`);
   }
 
+  if (idMedico !== undefined && idMedico !== null) {
+    condiciones.push(
+      `EXISTS (
+        SELECT 1 FROM historial_clinico h
+        WHERE h.id_paciente = u.id AND h.id_medico = ?
+      )`
+    );
+    parametros.push(idMedico);
+  }
+
   const [filas] = await pool.query(
-    `${SELECT_USUARIO} WHERE u.rol = 'paciente'${extra} ORDER BY u.apellido, u.nombre`,
+    `${SELECT_USUARIO} WHERE ${condiciones.join(' AND ')} ORDER BY u.apellido, u.nombre`,
     parametros
   );
   return filas;

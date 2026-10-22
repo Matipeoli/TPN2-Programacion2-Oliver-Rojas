@@ -2,30 +2,35 @@ const pool = require('../database/db');
 
 async function listar(filtros) {
   let sql = `
-    SELECT id, hora_entrada, hora_salida, DATE_FORMAT(fecha, '%Y-%m-%d') AS fecha,
-           id_medico, id_especialidad, id_sede
-    FROM agenda
+    SELECT a.id, a.hora_entrada, a.hora_salida, DATE_FORMAT(a.fecha, '%Y-%m-%d') AS fecha,
+           a.id_medico, a.id_especialidad, a.id_sede,
+           m.nombre AS medico_nombre, m.apellido AS medico_apellido,
+           e.descripcion AS especialidad, s.nombre AS sede
+    FROM agenda a
+    JOIN usuario m ON m.id = a.id_medico
+    JOIN especialidad e ON e.id = a.id_especialidad
+    JOIN sede s ON s.id = a.id_sede
   `;
   const condiciones = [];
   const parametros = [];
 
   if (filtros.id_medico) {
-    condiciones.push('id_medico = ?');
+    condiciones.push('a.id_medico = ?');
     parametros.push(filtros.id_medico);
   }
   if (filtros.id_sede) {
-    condiciones.push('id_sede = ?');
+    condiciones.push('a.id_sede = ?');
     parametros.push(filtros.id_sede);
   }
   if (filtros.fecha) {
-    condiciones.push('fecha = ?');
+    condiciones.push('a.fecha = ?');
     parametros.push(filtros.fecha);
   }
 
   if (condiciones.length > 0) {
     sql += ' WHERE ' + condiciones.join(' AND ');
   }
-  sql += ' ORDER BY fecha, hora_entrada';
+  sql += ' ORDER BY a.fecha, a.hora_entrada';
 
   const [filas] = await pool.query(sql, parametros);
   return filas;
@@ -62,4 +67,14 @@ async function eliminar(id) {
   return resultado.affectedRows > 0;
 }
 
-module.exports = { listar, buscarPorId, crear, actualizar, eliminar };
+async function listarTurnos(idAgenda) {
+  const [filas] = await pool.query(
+    `SELECT id, DATE_FORMAT(fecha, '%Y-%m-%d') AS fecha, hora, estado
+     FROM turno
+     WHERE id_agenda = ?`,
+    [idAgenda]
+  );
+  return filas;
+}
+
+module.exports = { listar, buscarPorId, crear, actualizar, eliminar, listarTurnos };

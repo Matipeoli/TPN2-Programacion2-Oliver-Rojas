@@ -44,4 +44,21 @@ async function tieneMedicoAsociado(id) {
   return filas.length > 0;
 }
 
-module.exports = { listar, buscarPorId, existePorId, crear, actualizar, eliminar, tieneMedicoAsociado };
+async function tieneAgendaAsociada(id) {
+  const [filas] = await pool.query(
+    'SELECT id FROM agenda WHERE id_especialidad = ? LIMIT 1',
+    [id]
+  );
+  return filas.length > 0;
+}
+
+module.exports = {
+  listar,
+  buscarPorId,
+  existePorId,
+  crear,
+  actualizar,
+  eliminar,
+  tieneMedicoAsociado,
+  tieneAgendaAsociada
+};

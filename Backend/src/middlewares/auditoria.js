@@ -22,6 +22,9 @@ function detalleDesdeRespuesta(body, accion) {
   if (accion === 'BAJA' && datos && datos.id !== undefined) {
     return `Registro eliminado con id ${datos.id}`;
   }
+  if (accion === 'MODIFICACION' && datos && datos.id !== undefined) {
+    return `Registro modificado con id ${datos.id}`;
+  }
   return JSON.stringify(datos ?? {});
 }
 
@@ -44,6 +47,10 @@ function registrarAuditoria(entidad, opciones = {}) {
 
     const jsonOriginal = res.json.bind(res);
     res.json = (body) => {
+      if (res.statusCode >= 400) {
+        return jsonOriginal(body);
+      }
+
       const idUsuario = opciones.idUsuario
         ? opciones.idUsuario(req, res, body)
         : (req.usuario && req.usuario.id) || null;

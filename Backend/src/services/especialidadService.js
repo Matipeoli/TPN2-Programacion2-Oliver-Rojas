@@ -46,6 +46,11 @@ async function eliminar(id) {
     throw new AppError(409, 'No se puede eliminar la especialidad porque tiene medicos asociados');
   }
 
+  const tieneAgenda = await especialidadRepository.tieneAgendaAsociada(id);
+  if (tieneAgenda) {
+    throw new AppError(409, 'No se puede eliminar la especialidad porque tiene agenda asociada');
+  }
+
   await especialidadRepository.eliminar(id);
   return { id: Number(id) };
 }

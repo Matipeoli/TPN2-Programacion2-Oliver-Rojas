@@ -4,6 +4,27 @@ const especialidadRepository = require('../repositories/especialidadRepository')
 const sedeRepository = require('../repositories/sedeRepository');
 const { AppError } = require('../utils/errores');
 const { validarFormatoFecha, validarFormatoHora } = require('../utils/validaciones');
+const { DURACION_TURNO_MINUTOS, horaAMinutos } = require('../utils/horarios');
+
+function validarSedeOperador(usuario, idSede) {
+  if (usuario.rol !== 'operador') {
+    return;
+  }
+  if (!usuario.id_sede || Number(idSede) !== Number(usuario.id_sede)) {
+    throw new AppError(403, 'No tiene permisos para gestionar la agenda de otra sede');
+  }
+}
+
+function turnoConfirmadoFueraDeRango(turno, fecha, horaEntrada, horaSalida) {
+  if (turno.fecha !== fecha) {
+    return true;
+  }
+  const inicio = horaAMinutos(turno.hora);
+  return (
+    inicio < horaAMinutos(horaEntrada) ||
+    inicio + DURACION_TURNO_MINUTOS > horaAMinutos(horaSalida)
+  );
+}
 
 async function listar(filtros, usuario) {
   let { id_medico, id_sede, fecha } = filtros;
@@ -57,6 +78,8 @@ async function crear(datos, usuario) {
   if (!haySede) {
     throw new AppError(400, 'La sede indicada no existe');
   }
+
+  validarSedeOperador(usuario, id_sede);
 
   const id = await agendaRepository.crear({
     hora_entrada,
@@ -119,6 +142,21 @@ async function actualizar(id, datos, usuario) {
     throw new AppError(400, 'La sede indicada no existe');
   }
 
+  validarSedeOperador(usuario, existe.id_sede);
+  validarSedeOperador(usuario, id_sede);
+
+  const turnos = await agendaRepository.listarTurnos(id);
+  const hayConfirmadoFuera = turnos
+    .filter((turno) => turno.estado === 'confirmado')
+    .some((turno) => turnoConfirmadoFueraDeRango(turno, fecha, hora_entrada, hora_salida));
+
+  if (hayConfirmadoFuera) {
+    throw new AppError(
+      409,
+      'No se puede modificar el rango porque deja turnos confirmados fuera del nuevo horario'
+    );
+  }
+
   await agendaRepository.actualizar(id, {
     hora_entrada,
     hora_salida,
@@ -147,6 +185,17 @@ async function eliminar(id, usuario) {
 
   if (usuario.rol === 'medico' && Number(existe.id_medico) !== usuario.id) {
     throw new AppError(403, 'No tiene permisos para eliminar la agenda de otro medico');
+  }
+
+  validarSedeOperador(usuario, existe.id_sede);
+
+  const turnos = await agendaRepository.listarTurnos(id);
+  const hayConfirmados = turnos.some((turno) => turno.estado === 'confirmado');
+  if (hayConfirmados) {
+    throw new AppError(409, 'No se puede eliminar el rango porque tiene turnos confirmados');
+  }
+  if (turnos.length > 0) {
+    throw new AppError(409, 'No se puede eliminar el rango porque tiene turnos asociados');
   }
 
   await agendaRepository.eliminar(id);

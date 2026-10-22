@@ -6,6 +6,16 @@ const { verificarToken, verificarRol } = require('../middlewares/auth');
 router.use(verificarToken);
 
 router.post('/', verificarRol('paciente', 'operador'), turnoController.crear);
+router.get(
+  '/disponibilidad/fechas',
+  verificarRol('paciente', 'operador'),
+  turnoController.listarFechasDisponibles
+);
+router.get(
+  '/disponibilidad/horarios',
+  verificarRol('paciente', 'operador'),
+  turnoController.listarHorariosDisponibles
+);
 router.patch('/:id/cancelar', verificarRol('paciente', 'operador', 'medico'), turnoController.cancelar);
 router.patch('/:id/atender', verificarRol('medico'), turnoController.atender);
 router.get('/paciente', verificarRol('paciente'), turnoController.listarPorPaciente);

@@ -1,6 +1,6 @@
 -- phpMyAdmin SQL Dump (adaptado)
--- Base de datos: `clinica` — versión ampliada para TP integrador
--- PASSWORDS REALES: los 4 usuarios de prueba tienen password `1234` (bcrypt).
+-- Base de datos: `clinica` - version ampliada para TP integrador
+-- PASSWORDS REALES: los usuarios de prueba tienen password `1234` (bcrypt).
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -22,7 +22,7 @@ CREATE TABLE `sede` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `sede` (`id`, `nombre`, `direccion`, `telefono`) VALUES
-(1, 'Sede Centro', 'San Martín 123', '3424000001'),
+(1, 'Sede Centro', 'San Martin 123', '3424000001'),
 (2, 'Sede Norte', 'Av. Rivadavia 456', '3424000002');
 
 -- --------------------------------------------------------
@@ -35,7 +35,9 @@ CREATE TABLE `cobertura` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `cobertura` (`id`, `nombre`) VALUES
-(1, 'Jerarquicos');
+(1, 'Jerarquicos'),
+(2, 'OSDE'),
+(3, 'Swiss Medical');
 
 -- --------------------------------------------------------
 -- Estructura de tabla para la tabla `especialidad`
@@ -47,7 +49,10 @@ CREATE TABLE `especialidad` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `especialidad` (`id`, `descripcion`) VALUES
-(1, 'Traumatologia');
+(1, 'Traumatologia'),
+(2, 'Cardiologia'),
+(3, 'Pediatria'),
+(4, 'Clinica Medica');
 
 -- --------------------------------------------------------
 -- Estructura de tabla para la tabla `usuario`
@@ -67,12 +72,16 @@ CREATE TABLE `usuario` (
   `id_cobertura` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Los passwords SI son funcionales: todos los usuarios entran con `1234`.
+-- Todos los usuarios de prueba entran con la password `1234`.
 INSERT INTO `usuario` (`id`, `apellido`, `nombre`, `fecha_nacimiento`, `password`, `rol`, `email`, `telefono`, `dni`, `id_sede`, `id_cobertura`) VALUES
 (1, 'Perez', 'Juan', '1995-12-30', '$2b$10$HZ3DrrPQbzp/FQRFHcGBXO0iCtDTp/LNeVS6RQRGXTy8BsbDwWWo6', 'operador', 'jperez@gmail.com', '3424568897', '15200548', 1, NULL),
-(2, 'Friggeri', 'Franco', '1998-03-14', '$2b$10$08bo3e6njaHwx13Im41fyu5bkuec78u7.Px.loCKrd4L65Ej4lt2.', 'paciente', 'asdas@gaasds.com', '342545555', '36000960', NULL, 1),
-(3, 'Lopez', 'Ana', '1980-05-10', '$2b$10$eX1Tz5TSRZcOoy1p/RUWL.qtDPy1h3sCiYaONsYNYdiC9pXV0e4Wa', 'medico', 'alopez@clinica.com', '3424111222', '20111222', 1, NULL),
-(4, 'Gomez', 'Marcos', '1975-08-01', '$2b$10$fiuvgzldY2YRFp5T276PNOpNYu7tRaLGrNJ/EAqddenCt5kvv8icq', 'admin', 'mgomez@clinica.com', '3424222333', '18222333', NULL, NULL);
+(2, 'Friggeri', 'Franco', '1998-03-14', '$2b$10$HZ3DrrPQbzp/FQRFHcGBXO0iCtDTp/LNeVS6RQRGXTy8BsbDwWWo6', 'paciente', 'ffriggeri@gmail.com', '3425455555', '36000960', NULL, 1),
+(3, 'Lopez', 'Ana', '1980-05-10', '$2b$10$HZ3DrrPQbzp/FQRFHcGBXO0iCtDTp/LNeVS6RQRGXTy8BsbDwWWo6', 'medico', 'alopez@clinica.com', '3424111222', '20111222', 1, NULL),
+(4, 'Gomez', 'Marcos', '1975-08-01', '$2b$10$HZ3DrrPQbzp/FQRFHcGBXO0iCtDTp/LNeVS6RQRGXTy8BsbDwWWo6', 'admin', 'mgomez@clinica.com', '3424222333', '18222333', NULL, NULL),
+(5, 'Rodriguez', 'Pablo', '1985-02-20', '$2b$10$HZ3DrrPQbzp/FQRFHcGBXO0iCtDTp/LNeVS6RQRGXTy8BsbDwWWo6', 'medico', 'prodriguez@clinica.com', '3424333444', '22333444', 1, NULL),
+(6, 'Martinez', 'Lucia', '1990-07-15', '$2b$10$HZ3DrrPQbzp/FQRFHcGBXO0iCtDTp/LNeVS6RQRGXTy8BsbDwWWo6', 'medico', 'lmartinez@clinica.com', '3424444555', '23444555', 2, NULL),
+(7, 'Sosa', 'Maria', '2001-11-05', '$2b$10$HZ3DrrPQbzp/FQRFHcGBXO0iCtDTp/LNeVS6RQRGXTy8BsbDwWWo6', 'paciente', 'msosa@gmail.com', '3424555666', '41000111', NULL, 2),
+(8, 'Diaz', 'Carlos', '1970-01-25', '$2b$10$HZ3DrrPQbzp/FQRFHcGBXO0iCtDTp/LNeVS6RQRGXTy8BsbDwWWo6', 'paciente', 'cdiaz@gmail.com', '3424666777', '12000222', NULL, 3);
 
 -- --------------------------------------------------------
 -- Estructura de tabla para la tabla `medico_especialidad`
@@ -85,7 +94,11 @@ CREATE TABLE `medico_especialidad` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `medico_especialidad` (`id`, `id_medico`, `id_especialidad`) VALUES
-(1, 3, 1);
+(1, 3, 1),
+(2, 3, 4),
+(3, 5, 2),
+(4, 5, 4),
+(5, 6, 3);
 
 -- --------------------------------------------------------
 -- Estructura de tabla para la tabla `agenda`
@@ -101,8 +114,14 @@ CREATE TABLE `agenda` (
   `id_sede` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+-- Fechas relativas para que la demo no venza.
+-- El medico 3 (Lopez) atiende en las dos sedes y tiene dos rangos el mismo dia.
 INSERT INTO `agenda` (`id`, `hora_entrada`, `hora_salida`, `fecha`, `id_medico`, `id_especialidad`, `id_sede`) VALUES
-(2, '15:00', '20:00', '2025-10-20', 3, 1, 1);
+(1, '09:00', '12:00', CURDATE(), 3, 1, 1),
+(2, '15:00', '19:00', CURDATE(), 3, 4, 1),
+(3, '15:00', '19:00', DATE_ADD(CURDATE(), INTERVAL 1 DAY), 3, 1, 2),
+(4, '10:00', '13:00', CURDATE(), 5, 2, 1),
+(5, '08:00', '12:00', DATE_ADD(CURDATE(), INTERVAL 2 DAY), 6, 3, 2);
 
 -- --------------------------------------------------------
 -- Estructura de tabla para la tabla `turno`
@@ -120,7 +139,11 @@ CREATE TABLE `turno` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `turno` (`id`, `nota`, `id_agenda`, `fecha`, `hora`, `id_paciente`, `id_cobertura`, `estado`) VALUES
-(2, 'Control de estudio', 2, '2025-10-27', '15:30', 2, 1, 'atendido');
+(1, 'Control de estudio', 1, CURDATE(), '09:30', 2, 1, 'atendido'),
+(2, 'Dolor de pecho', 4, CURDATE(), '10:30', 7, 2, 'confirmado'),
+(3, 'Control de rodilla', 3, DATE_ADD(CURDATE(), INTERVAL 1 DAY), '16:00', 2, 1, 'cancelado'),
+(4, 'Consulta general', 2, CURDATE(), '15:30', 8, 3, 'confirmado'),
+(5, 'Control pediatrico', 5, DATE_ADD(CURDATE(), INTERVAL 2 DAY), '09:00', 7, 2, 'confirmado');
 
 -- --------------------------------------------------------
 -- Estructura de tabla para la tabla `historial_clinico`
@@ -138,7 +161,7 @@ CREATE TABLE `historial_clinico` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `historial_clinico` (`id`, `id_turno`, `id_medico`, `id_paciente`, `diagnostico`, `tratamiento`, `observaciones`, `fecha_registro`) VALUES
-(1, 2, 3, 2, 'Esguince de tobillo grado I', 'Reposo y antiinflamatorios', 'Control en 15 dias', '2025-10-27 16:00:00');
+(1, 1, 3, 2, 'Esguince de tobillo grado I', 'Reposo y antiinflamatorios', 'Control en 15 dias', DATE_SUB(NOW(), INTERVAL 2 HOUR));
 
 -- --------------------------------------------------------
 -- Estructura de tabla para la tabla `log_auditoria`
@@ -155,7 +178,8 @@ CREATE TABLE `log_auditoria` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `log_auditoria` (`id`, `id_usuario`, `accion`, `entidad`, `id_entidad`, `detalle`, `fecha`) VALUES
-(1, 4, 'ALTA', 'usuario', 2, 'Alta de paciente Friggeri Franco', '2025-10-01 10:00:00');
+(1, 4, 'ALTA', 'usuario', 2, 'Alta de paciente Friggeri Franco', DATE_SUB(NOW(), INTERVAL 3 DAY)),
+(2, 4, 'MODIFICACION', 'usuario', 7, 'Modificacion de paciente Sosa Maria', DATE_SUB(NOW(), INTERVAL 1 DAY));
 
 -- --------------------------------------------------------
 -- Estructura de tabla para la tabla `notificacion`
@@ -171,11 +195,14 @@ CREATE TABLE `notificacion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `notificacion` (`id`, `id_usuario`, `tipo`, `mensaje`, `leida`, `fecha`) VALUES
-(1, 2, 'turno_confirmado', 'Tu turno del 27/10/2025 a las 15:30 fue confirmado.', 1, '2025-10-01 09:00:00'),
-(2, 3, 'turno_atendido', 'Registraste el turno de Franco Friggeri como atendido.', 0, '2025-10-27 16:00:00');
+(1, 2, 'turno_confirmado', 'Tu turno fue confirmado.', 1, DATE_SUB(NOW(), INTERVAL 3 DAY)),
+(2, 3, 'turno_atendido', 'Registraste un turno como atendido.', 0, DATE_SUB(NOW(), INTERVAL 2 HOUR)),
+(3, 2, 'turno_cancelado', 'Tu turno fue cancelado.', 0, DATE_SUB(NOW(), INTERVAL 1 DAY)),
+(4, 7, 'turno_confirmado', 'Tu turno fue confirmado.', 0, DATE_SUB(NOW(), INTERVAL 1 HOUR)),
+(5, 8, 'turno_confirmado', 'Tu turno fue confirmado.', 1, DATE_SUB(NOW(), INTERVAL 30 MINUTE));
 
 --
--- Índices para tablas volcadas
+-- Indices para tablas volcadas
 --
 ALTER TABLE `sede` ADD PRIMARY KEY (`id`);
 ALTER TABLE `cobertura` ADD PRIMARY KEY (`id`);
@@ -221,15 +248,15 @@ ALTER TABLE `notificacion`
 -- AUTO_INCREMENT de las tablas volcadas
 --
 ALTER TABLE `sede` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-ALTER TABLE `cobertura` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-ALTER TABLE `especialidad` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-ALTER TABLE `usuario` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-ALTER TABLE `medico_especialidad` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-ALTER TABLE `agenda` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-ALTER TABLE `turno` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `cobertura` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `especialidad` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `usuario` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE `medico_especialidad` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `agenda` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `turno` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 ALTER TABLE `historial_clinico` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-ALTER TABLE `log_auditoria` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-ALTER TABLE `notificacion` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `log_auditoria` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `notificacion` MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

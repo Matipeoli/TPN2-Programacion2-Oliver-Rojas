@@ -15,12 +15,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/health",
+              "raw": "http://localhost:8080/health",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "health"
               ]
@@ -35,12 +35,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/coberturas",
+              "raw": "http://localhost:8080/coberturas",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "coberturas"
               ]
@@ -92,12 +92,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/auth/registro",
+              "raw": "http://localhost:8080/auth/registro",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "auth",
                 "registro"
@@ -145,12 +145,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/auth/login",
+              "raw": "http://localhost:8080/auth/login",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "auth",
                 "login"
@@ -176,12 +176,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/auth/perfil",
+              "raw": "http://localhost:8080/auth/perfil",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "auth",
                 "perfil"
@@ -245,12 +245,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/agenda",
+              "raw": "http://localhost:8080/agenda",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "agenda"
               ]
@@ -275,12 +275,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/agenda",
+              "raw": "http://localhost:8080/agenda",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "agenda"
               ]
@@ -320,12 +320,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/agenda/{{id_agenda}}",
+              "raw": "http://localhost:8080/agenda/{{id_agenda}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "agenda",
                 "{{id_agenda}}"
@@ -351,12 +351,12 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/agenda/{{id_agenda}}",
+              "raw": "http://localhost:8080/agenda/{{id_agenda}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "agenda",
                 "{{id_agenda}}"
@@ -409,12 +409,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/auth/registro",
+              "raw": "http://localhost:8080/auth/registro",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "auth",
                 "registro"
@@ -462,12 +462,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/auth/login",
+              "raw": "http://localhost:8080/auth/login",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "auth",
                 "login"
@@ -493,12 +493,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/auth/perfil",
+              "raw": "http://localhost:8080/auth/perfil",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "auth",
                 "perfil"
@@ -557,12 +557,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/turnos",
+              "raw": "http://localhost:8080/turnos",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos"
               ]
@@ -587,12 +587,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/paciente",
+              "raw": "http://localhost:8080/turnos/paciente",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "paciente"
@@ -618,12 +618,12 @@
             "method": "PATCH",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/{{id_turno_paciente}}/cancelar",
+              "raw": "http://localhost:8080/turnos/{{id_turno_paciente}}/cancelar",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "{{id_turno_paciente}}",
@@ -650,12 +650,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/historial/paciente/{{id_paciente}}",
+              "raw": "http://localhost:8080/historial/paciente/{{id_paciente}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "historial",
                 "paciente",
@@ -699,12 +699,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/notificaciones",
+              "raw": "http://localhost:8080/notificaciones",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "notificaciones"
               ]
@@ -729,12 +729,12 @@
             "method": "PATCH",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/notificaciones/{{id_notificacion}}/leer",
+              "raw": "http://localhost:8080/notificaciones/{{id_notificacion}}/leer",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "notificaciones",
                 "{{id_notificacion}}",
@@ -761,12 +761,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/medico?fecha={{fecha_slot}}",
+              "raw": "http://localhost:8080/turnos/medico?fecha={{fecha_slot}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "medico"
@@ -798,12 +798,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/sede?fecha={{fecha_slot}}",
+              "raw": "http://localhost:8080/turnos/sede?fecha={{fecha_slot}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "sede"
@@ -850,12 +850,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/historial",
+              "raw": "http://localhost:8080/historial",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "historial"
               ]
@@ -907,12 +907,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/auth/login",
+              "raw": "http://localhost:8080/auth/login",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "auth",
                 "login"
@@ -938,12 +938,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/medico?fecha={{fecha_slot}}",
+              "raw": "http://localhost:8080/turnos/medico?fecha={{fecha_slot}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "medico"
@@ -992,12 +992,12 @@
             "method": "PATCH",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/{{id_turno}}/atender",
+              "raw": "http://localhost:8080/turnos/{{id_turno}}/atender",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "{{id_turno}}",
@@ -1039,12 +1039,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/historial",
+              "raw": "http://localhost:8080/historial",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "historial"
               ]
@@ -1069,12 +1069,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/historial/paciente/{{id_paciente}}",
+              "raw": "http://localhost:8080/historial/paciente/{{id_paciente}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "historial",
                 "paciente",
@@ -1118,12 +1118,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/notificaciones",
+              "raw": "http://localhost:8080/notificaciones",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "notificaciones"
               ]
@@ -1148,12 +1148,12 @@
             "method": "PATCH",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/notificaciones/{{id_notificacion}}/leer",
+              "raw": "http://localhost:8080/notificaciones/{{id_notificacion}}/leer",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "notificaciones",
                 "{{id_notificacion}}",
@@ -1180,12 +1180,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/paciente",
+              "raw": "http://localhost:8080/turnos/paciente",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "paciente"
@@ -1211,12 +1211,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/sede?fecha={{fecha_slot}}",
+              "raw": "http://localhost:8080/turnos/sede?fecha={{fecha_slot}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "sede"
@@ -1263,12 +1263,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/turnos",
+              "raw": "http://localhost:8080/turnos",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos"
               ]
@@ -1320,12 +1320,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/auth/login",
+              "raw": "http://localhost:8080/auth/login",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "auth",
                 "login"
@@ -1351,12 +1351,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/auth/perfil",
+              "raw": "http://localhost:8080/auth/perfil",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "auth",
                 "perfil"
@@ -1382,12 +1382,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/sedes",
+              "raw": "http://localhost:8080/sedes",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "sedes"
               ]
@@ -1444,12 +1444,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/sedes",
+              "raw": "http://localhost:8080/sedes",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "sedes"
               ]
@@ -1489,12 +1489,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/sedes/{{id_sede}}",
+              "raw": "http://localhost:8080/sedes/{{id_sede}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "sedes",
                 "{{id_sede}}"
@@ -1520,12 +1520,12 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/sedes/{{id_sede}}",
+              "raw": "http://localhost:8080/sedes/{{id_sede}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "sedes",
                 "{{id_sede}}"
@@ -1551,12 +1551,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/especialidades",
+              "raw": "http://localhost:8080/especialidades",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "especialidades"
               ]
@@ -1613,12 +1613,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/especialidades",
+              "raw": "http://localhost:8080/especialidades",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "especialidades"
               ]
@@ -1658,12 +1658,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/especialidades/{{id_esp}}",
+              "raw": "http://localhost:8080/especialidades/{{id_esp}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "especialidades",
                 "{{id_esp}}"
@@ -1689,12 +1689,12 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/especialidades/{{id_esp}}",
+              "raw": "http://localhost:8080/especialidades/{{id_esp}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "especialidades",
                 "{{id_esp}}"
@@ -1720,12 +1720,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/coberturas",
+              "raw": "http://localhost:8080/coberturas",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "coberturas"
               ]
@@ -1782,12 +1782,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/coberturas",
+              "raw": "http://localhost:8080/coberturas",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "coberturas"
               ]
@@ -1827,12 +1827,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/coberturas/{{id_cob}}",
+              "raw": "http://localhost:8080/coberturas/{{id_cob}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "coberturas",
                 "{{id_cob}}"
@@ -1858,12 +1858,12 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/coberturas/{{id_cob}}",
+              "raw": "http://localhost:8080/coberturas/{{id_cob}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "coberturas",
                 "{{id_cob}}"
@@ -1904,12 +1904,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/turnos",
+              "raw": "http://localhost:8080/turnos",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos"
               ]
@@ -1949,12 +1949,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/historial",
+              "raw": "http://localhost:8080/historial",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "historial"
               ]
@@ -1979,12 +1979,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/medico?fecha={{fecha_slot}}",
+              "raw": "http://localhost:8080/turnos/medico?fecha={{fecha_slot}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "medico"
@@ -2016,12 +2016,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/sede?fecha={{fecha_slot}}",
+              "raw": "http://localhost:8080/turnos/sede?fecha={{fecha_slot}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "sede"
@@ -2053,12 +2053,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/auditoria",
+              "raw": "http://localhost:8080/auditoria",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "auditoria"
               ]
@@ -2083,12 +2083,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/reportes/turnos-por-especialidad",
+              "raw": "http://localhost:8080/reportes/turnos-por-especialidad",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "reportes",
                 "turnos-por-especialidad"
@@ -2114,12 +2114,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/reportes/turnos-por-sede",
+              "raw": "http://localhost:8080/reportes/turnos-por-sede",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "reportes",
                 "turnos-por-sede"
@@ -2145,12 +2145,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/reportes/ranking-medicos",
+              "raw": "http://localhost:8080/reportes/ranking-medicos",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "reportes",
                 "ranking-medicos"
@@ -2176,12 +2176,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/reportes/tasa-cancelacion",
+              "raw": "http://localhost:8080/reportes/tasa-cancelacion",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "reportes",
                 "tasa-cancelacion"
@@ -2234,12 +2234,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/auth/login",
+              "raw": "http://localhost:8080/auth/login",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "auth",
                 "login"
@@ -2265,12 +2265,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/auth/perfil",
+              "raw": "http://localhost:8080/auth/perfil",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "auth",
                 "perfil"
@@ -2296,12 +2296,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/agenda",
+              "raw": "http://localhost:8080/agenda",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "agenda"
               ]
@@ -2364,12 +2364,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/agenda",
+              "raw": "http://localhost:8080/agenda",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "agenda"
               ]
@@ -2394,12 +2394,12 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/agenda/{{id_agenda}}",
+              "raw": "http://localhost:8080/agenda/{{id_agenda}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "agenda",
                 "{{id_agenda}}"
@@ -2457,12 +2457,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/turnos",
+              "raw": "http://localhost:8080/turnos",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos"
               ]
@@ -2487,12 +2487,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/sede?fecha={{fecha_slot}}",
+              "raw": "http://localhost:8080/turnos/sede?fecha={{fecha_slot}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "sede"
@@ -2524,12 +2524,12 @@
             "method": "PATCH",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/{{id_turno_operador}}/cancelar",
+              "raw": "http://localhost:8080/turnos/{{id_turno_operador}}/cancelar",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "{{id_turno_operador}}",
@@ -2573,12 +2573,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/notificaciones",
+              "raw": "http://localhost:8080/notificaciones",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "notificaciones"
               ]
@@ -2603,12 +2603,12 @@
             "method": "PATCH",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/notificaciones/{{id_notificacion}}/leer",
+              "raw": "http://localhost:8080/notificaciones/{{id_notificacion}}/leer",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "notificaciones",
                 "{{id_notificacion}}",
@@ -2635,12 +2635,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/paciente",
+              "raw": "http://localhost:8080/turnos/paciente",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "paciente"
@@ -2666,12 +2666,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/turnos/medico?fecha={{fecha_slot}}",
+              "raw": "http://localhost:8080/turnos/medico?fecha={{fecha_slot}}",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "turnos",
                 "medico"
@@ -2718,12 +2718,12 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/historial",
+              "raw": "http://localhost:8080/historial",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "historial"
               ]
@@ -2748,12 +2748,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/historial/paciente/1",
+              "raw": "http://localhost:8080/historial/paciente/1",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "3000",
+              "port": "8080",
               "path": [
                 "historial",
                 "paciente",
@@ -2761,6 +2761,364 @@
               ]
             },
             "description": "**PRUEBA DE ERROR: un rol que no es `paciente` ni `medico` intenta consultar un historial clinico.**\n\n- **Metodo:** `GET`\n- **Ruta:** `/historial/paciente/:id_paciente`\n- **Rol requerido:** Requiere token. Debe responder `403`.\n\n**Errores:**\n`403` rol no permitido.\n"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "06 - Soporte frontend",
+      "item": [
+        {
+          "name": "Listar medicos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/medicos?especialidad=1&sede=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "medicos"
+              ],
+              "query": [
+                {
+                  "key": "especialidad",
+                  "value": "1"
+                },
+                {
+                  "key": "sede",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "**Lista medicos con sus especialidades, filtrable por especialidad y sede.** Cualquier rol autenticado. Devuelve id, nombre, apellido y especialidades."
+          },
+          "response": []
+        },
+        {
+          "name": "Disponibilidad: fechas",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/turnos/disponibilidad/fechas?id_medico=3&id_especialidad=1&id_sede=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "turnos",
+                "disponibilidad",
+                "fechas"
+              ],
+              "query": [
+                {
+                  "key": "id_medico",
+                  "value": "3"
+                },
+                {
+                  "key": "id_especialidad",
+                  "value": "1"
+                },
+                {
+                  "key": "id_sede",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "**Fechas con agenda para un medico, especialidad y sede.** Roles `paciente` y `operador`. Devuelve un array de fechas YYYY-MM-DD."
+          },
+          "response": []
+        },
+        {
+          "name": "Disponibilidad: horarios",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/turnos/disponibilidad/horarios?id_medico=3&id_especialidad=1&id_sede=1&fecha={{fecha_slot}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "turnos",
+                "disponibilidad",
+                "horarios"
+              ],
+              "query": [
+                {
+                  "key": "id_medico",
+                  "value": "3"
+                },
+                {
+                  "key": "id_especialidad",
+                  "value": "1"
+                },
+                {
+                  "key": "id_sede",
+                  "value": "1"
+                },
+                {
+                  "key": "fecha",
+                  "value": "{{fecha_slot}}"
+                }
+              ]
+            },
+            "description": "**Horarios libres de 30 minutos para un medico, especialidad, sede y fecha.** Roles `paciente` y `operador`. Excluye los turnos confirmados."
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar pacientes",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/pacientes?busqueda=Friggeri",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "pacientes"
+              ],
+              "query": [
+                {
+                  "key": "busqueda",
+                  "value": "Friggeri"
+                }
+              ]
+            },
+            "description": "**Busca pacientes por DNI o apellido.** Roles `operador`, `medico` y `admin`."
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar mi perfil (paciente)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"nuevo@mail.com\",\"telefono\":\"3424000000\",\"password\":\"1234\",\"id_cobertura\":1}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/perfil",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "perfil"
+              ]
+            },
+            "description": "**El paciente actualiza solo email, password, telefono y cobertura.** La password se guarda hasheada."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar usuarios (admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/usuarios?pagina=1&limite=10&rol=medico",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "usuarios"
+              ],
+              "query": [
+                {
+                  "key": "pagina",
+                  "value": "1"
+                },
+                {
+                  "key": "limite",
+                  "value": "10"
+                },
+                {
+                  "key": "rol",
+                  "value": "medico"
+                }
+              ]
+            },
+            "description": "**Listado paginado de usuarios con filtros por nombre, apellido, rol y sede.** Solo `admin`. Incluye especialidades de los medicos."
+          },
+          "response": []
+        },
+        {
+          "name": "Alta usuario (admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nombre\":\"Pablo\",\"apellido\":\"Rodriguez\",\"dni\":\"30000111\",\"email\":\"prodriguez2@clinica.com\",\"password\":\"1234\",\"rol\":\"medico\",\"fecha_nacimiento\":\"1985-02-20\",\"telefono\":\"3424333444\",\"id_sede\":1,\"especialidades\":[1,2]}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/usuarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "usuarios"
+              ]
+            },
+            "description": "**Alta de operador, medico o admin.** Operador y medico requieren id_sede; el medico requiere especialidades; el admin no tiene sede. Registra auditoria."
+          },
+          "response": []
+        },
+        {
+          "name": "Editar usuario (admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nombre\":\"Pablo\",\"apellido\":\"Rodriguez\",\"dni\":\"30000111\",\"email\":\"prodriguez2@clinica.com\",\"rol\":\"medico\",\"fecha_nacimiento\":\"1985-02-20\",\"telefono\":\"3424333444\",\"id_sede\":2,\"especialidades\":[1]}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/usuarios/{{id_usuario}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "usuarios",
+                "{{id_usuario}}"
+              ]
+            },
+            "description": "**Edicion de cualquier usuario, incluidos pacientes y especialidades del medico.** Password opcional en edicion. Registra auditoria."
           },
           "response": []
         }
@@ -2818,6 +3176,10 @@
     },
     {
       "key": "id_notificacion",
+      "value": ""
+    },
+    {
+      "key": "id_usuario",
       "value": ""
     }
   ]

@@ -3,6 +3,7 @@ const usuarioRepository = require('../repositories/usuarioRepository');
 const notificacionService = require('./notificacionService');
 const { AppError } = require('../utils/errores');
 const { validarFormatoFecha, validarFormatoHora } = require('../utils/validaciones');
+const { DURACION_TURNO_MINUTOS, horaAMinutos, minutosAHora } = require('../utils/horarios');
 
 function formatoFecha(valor) {
   return new Date(valor).toISOString().slice(0, 10);
@@ -31,9 +32,9 @@ async function crear(datos, usuario) {
   validarFormatoFecha(fecha, 'fecha');
   validarFormatoHora(hora, 'hora');
 
-  const agenda = await turnoRepository.buscarAgenda({ id_medico, id_especialidad, id_sede, fecha });
+  const agenda = await turnoRepository.buscarAgenda({ id_medico, id_especialidad, id_sede, fecha, hora });
   if (!agenda) {
-    throw new AppError(400, 'No existe agenda disponible para el medico, especialidad, sede y fecha indicados');
+    throw new AppError(400, 'No existe agenda disponible para el medico, especialidad, sede, fecha y horario indicados');
   }
 
   if (usuario.rol === 'operador') {
@@ -45,8 +46,15 @@ async function crear(datos, usuario) {
     }
   }
 
-  if (hora < agenda.hora_entrada || hora >= agenda.hora_salida) {
+  const inicioAgenda = horaAMinutos(agenda.hora_entrada);
+  const finAgenda = horaAMinutos(agenda.hora_salida);
+  const horarioSolicitado = horaAMinutos(hora);
+
+  if (horarioSolicitado < inicioAgenda || horarioSolicitado + DURACION_TURNO_MINUTOS > finAgenda) {
     throw new AppError(400, `El horario solicitado no esta dentro del rango disponible (${agenda.hora_entrada} - ${agenda.hora_salida})`);
+  }
+  if ((horarioSolicitado - inicioAgenda) % DURACION_TURNO_MINUTOS !== 0) {
+    throw new AppError(400, `Los turnos se asignan en bloques de ${DURACION_TURNO_MINUTOS} minutos`);
   }
 
   const paciente = await usuarioRepository.buscarPorId(idPaciente);
@@ -95,9 +103,13 @@ async function cancelar(id, usuario) {
     if (Number(turno.id_paciente) !== usuario.id) {
       throw new AppError(403, 'No tiene permisos para cancelar este turno');
     }
-  } else if (usuario.rol === 'operador' || usuario.rol === 'medico') {
+  } else if (usuario.rol === 'operador') {
     if (Number(turno.id_sede) !== Number(usuario.id_sede)) {
       throw new AppError(403, 'No tiene permisos para cancelar turnos de otra sede');
+    }
+  } else if (usuario.rol === 'medico') {
+    if (Number(turno.id_medico) !== Number(usuario.id)) {
+      throw new AppError(403, 'No tiene permisos para cancelar este turno');
     }
   }
 
@@ -166,4 +178,63 @@ async function listarPorSede(filtros, usuario) {
   return turnoRepository.listarPorSede(Number(usuario.id_sede), fecha);
 }
 
-module.exports = { crear, cancelar, atender, listarPorPaciente, listarPorMedico, listarPorSede };
+async function listarFechasDisponibles(filtros) {
+  const { id_medico, id_especialidad, id_sede } = filtros;
+
+  if (!id_medico || !id_especialidad || !id_sede) {
+    throw new AppError(400, 'Faltan datos obligatorios: id_medico, id_especialidad, id_sede');
+  }
+
+  return turnoRepository.listarFechasDisponibles({ id_medico, id_especialidad, id_sede });
+}
+
+async function listarHorariosDisponibles(filtros) {
+  const { id_medico, id_especialidad, id_sede, fecha } = filtros;
+
+  if (!id_medico || !id_especialidad || !id_sede || !fecha) {
+    throw new AppError(400, 'Faltan datos obligatorios: id_medico, id_especialidad, id_sede, fecha');
+  }
+  validarFormatoFecha(fecha, 'fecha');
+
+  const rangos = await turnoRepository.listarAgendaDelDia({
+    id_medico,
+    id_especialidad,
+    id_sede,
+    fecha
+  });
+  if (rangos.length === 0) {
+    return [];
+  }
+
+  const ocupadas = await turnoRepository.listarHorasConfirmadas(
+    rangos.map((rango) => rango.id),
+    fecha
+  );
+  const horasOcupadas = new Set(ocupadas.map((hora) => String(hora).slice(0, 5)));
+
+  const horarios = new Set();
+  for (const rango of rangos) {
+    const inicio = horaAMinutos(rango.hora_entrada);
+    const fin = horaAMinutos(rango.hora_salida);
+
+    for (let minuto = inicio; minuto + DURACION_TURNO_MINUTOS <= fin; minuto += DURACION_TURNO_MINUTOS) {
+      const hora = minutosAHora(minuto);
+      if (!horasOcupadas.has(hora)) {
+        horarios.add(hora);
+      }
+    }
+  }
+
+  return Array.from(horarios).sort();
+}
+
+module.exports = {
+  crear,
+  cancelar,
+  atender,
+  listarPorPaciente,
+  listarPorMedico,
+  listarPorSede,
+  listarFechasDisponibles,
+  listarHorariosDisponibles
+};

@@ -31,4 +31,23 @@ async function listarPorSede(req, res) {
   return enviarRespuesta(res, 200, 'ok', filas);
 }
 
-module.exports = { crear, cancelar, atender, listarPorPaciente, listarPorMedico, listarPorSede };
+async function listarFechasDisponibles(req, res) {
+  const filas = await turnoService.listarFechasDisponibles(req.query);
+  return enviarRespuesta(res, 200, 'ok', filas);
+}
+
+async function listarHorariosDisponibles(req, res) {
+  const filas = await turnoService.listarHorariosDisponibles(req.query);
+  return enviarRespuesta(res, 200, 'ok', filas);
+}
+
+module.exports = {
+  crear,
+  cancelar,
+  atender,
+  listarPorPaciente,
+  listarPorMedico,
+  listarPorSede,
+  listarFechasDisponibles,
+  listarHorariosDisponibles
+};
